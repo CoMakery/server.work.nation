@@ -6,15 +6,15 @@ ruby '2.4.0'
 #   "https://github.com/#{repo_name}.git"
 # end
 
-gem 'airbrake'
+# gem 'airbrake'
 gem 'awesome_print'
 gem 'coffee-rails'
-gem 'jbuilder' # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jquery-rails'
 gem 'momentjs-rails'
 gem 'pg'
 gem 'puma'
-gem 'rails'
+gem 'rails', '5.1.0.rc1'
+# gem 'rails', git: 'git@github.com:rails/rails.git', ref: '5-1-stable'
 gem 'sass-rails', github: "rails/sass-rails"
 gem 'sqlite3'
 gem 'turbolinks'
