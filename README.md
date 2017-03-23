@@ -1,24 +1,11 @@
-# README
+# Work.nation
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Dev
 
-Things you may want to cover:
+```
+bin/webpack-watcher  # watches and rebuilds JS
+bin/rails s
+```
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+All JS is now in `app/javascript/packs` and is managed with webpack and yarn.  
+For more info, see: http://pixelatedworks.com/articles/embracing-change-rails51-adopts-yarn-webpack-and-the-js-ecosystem/
