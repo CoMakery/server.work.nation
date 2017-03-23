@@ -11,7 +11,7 @@ if(distDir === undefined) {
   distDir = 'packs'
 }
 
-config = {
+var config = {
   entry: glob.sync(path.join('app', 'javascript', 'packs', '*.js*')).reduce(
     function(map, entry) {
       var basename = path.basename(entry, extname(entry))
@@ -21,6 +21,12 @@ config = {
   ),
 
   output: { filename: '[name].js', path: path.resolve('public', distDir) },
+
+  resolve: {
+    alias: {
+      jquery: "jquery/src/jquery"
+    }
+  },
 
   module: {
     rules: [
