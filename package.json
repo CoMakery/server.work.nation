@@ -1,12 +1,17 @@
 {
   "name": "work_nation",
   "private": true,
+  "scripts": {
+    "postinstall": "babel node_modules/uport-connect/src -d node_modules/uport-connect/lib"
+  },
   "dependencies": {
     "jquery": "^3.2.1",
-    "uport-connect": "^0.5.3"
+    "uport-connect": "git+https://github.com/uport-project/uport-connect#develop"
   },
   "devDependencies": {
+    "babel-cli": "^6.24.0",
     "babel-core": "^6.24.0",
+    "babel-plugin-transform-object-rest-spread": "^6.22.0",
     "babel-loader": "^6.4.1",
     "babel-preset-latest": "^6.24.0",
     "coffee-loader": "^0.7.3",
