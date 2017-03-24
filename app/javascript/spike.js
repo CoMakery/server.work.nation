@@ -1,5 +1,4 @@
-import { Credentials, SimpleSigner } from 'uport'
-import { Connect } from 'uport-connect'
+import { Connect, Credentials, SimpleSigner } from 'uport-connect'
 import * as $ from 'jquery'
 
 const d = console.log
