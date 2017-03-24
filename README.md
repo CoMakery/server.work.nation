@@ -3,7 +3,8 @@
 ## Dev
 
 ```
-bin/webpack-watcher  # watches and rebuilds JS
+bin/yarn              # install / update JS
+bin/webpack-watcher   # watches and rebuilds JS
 bin/rails s
 ```
 
