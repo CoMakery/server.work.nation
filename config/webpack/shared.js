@@ -1,20 +1,20 @@
 // Note: You must restart bin/webpack-watcher for changes to take effect
 
-var webpack = require('webpack')
-var path = require('path')
-var process = require('process')
-var glob = require('glob')
-var extname = require('path-complete-extname')
-var distDir = process.env.WEBPACK_DIST_DIR
+let webpack = require('webpack')
+let path = require('path')
+let process = require('process')
+let glob = require('glob')
+let extname = require('path-complete-extname')
+let distDir = process.env.WEBPACK_DIST_DIR
 
-if(distDir === undefined) {
+if (distDir === undefined) {
   distDir = 'packs'
 }
 
-var config = {
+let config = {
   entry: glob.sync(path.join('app', 'javascript', 'packs', '*.js*')).reduce(
-    function(map, entry) {
-      var basename = path.basename(entry, extname(entry))
+    (map, entry) => {
+      let basename = path.basename(entry, extname(entry))
       map[basename] = path.resolve(entry)
       return map
     }, {}
@@ -22,15 +22,9 @@ var config = {
 
   output: { filename: '[name].js', path: path.resolve('public', distDir) },
 
-  resolve: {
-    alias: {
-      jquery: "jquery/src/jquery"
-    }
-  },
-
   module: {
     rules: [
-      { test: /\.coffee(.erb)?$/, loader: "coffee-loader" },
+      { test: /\.coffee(.erb)?$/, loader: 'coffee-loader' },
       {
         test: /\.js(.erb)?$/,
         exclude: /node_modules/,
@@ -58,6 +52,9 @@ var config = {
   ],
 
   resolve: {
+    alias: {
+      jquery: 'jquery/src/jquery'
+    },
     extensions: [ '.js', '.coffee' ],
     modules: [
       path.resolve('app/javascript'),

@@ -2,6 +2,8 @@
   "name": "work_nation",
   "private": true,
   "scripts": {
+    "lint": "yarn run lint:ci -- --fix",
+    "lint:ci": "eslint --ignore-pattern '!.eslintrc.js' .eslintrc.js app/javascript config/webpack",
     "postinstall": "babel node_modules/uport-connect/src -d node_modules/uport-connect/lib"
   },
   "dependencies": {
