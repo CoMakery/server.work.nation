@@ -22,6 +22,7 @@
     "eslint": "^3.18.0",
     "eslint-config-comakery": "^0.0.4",
     "glob": "^7.1.1",
+    "keythereum": "^0.4.3",
     "path-complete-extname": "^0.1.0",
     "rails-erb-loader": "^3.2.0",
     "webpack": "^2.3.1",
