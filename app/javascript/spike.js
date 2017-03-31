@@ -1,8 +1,6 @@
 import { Connect, Credentials, SimpleSigner } from 'uport-connect'
 import * as $ from 'jquery'
 
-const web3 = Connect.getWeb3()
-
 const d = (arg) => console.log(JSON.stringify(arg, null, 4))
 
 // const harlan = '0x57fab088be2f8bfd5d4cbf849c2568672e4f3db3'
@@ -14,6 +12,8 @@ const clientId = '0xe2fef711a5988fbe84b806d4817197f033dde050'
 // const signer = SimpleSigner(appPrivateKey)
 const connect1 = new Connect(appName, { clientId })
 
+const web3 = connect1.getWeb3()
+
 let state = {
   userUportId: '',
   txHash: '',
@@ -22,22 +22,23 @@ let state = {
 }
 
 const attest = () => {
-  const claimAbi = [{'constant': true, 'inputs': [], 'name': 'claim', 'outputs': [{'name': '', 'type': 'string'}], 'payable': false, 'type': 'function'}, {'constant': false, 'inputs': [{'name': '_target', 'type': 'address'}, {'name': '_claimId', 'type': 'string'}], 'name': 'attest', 'outputs': [], 'payable': false, 'type': 'function'}, {'anonymous': false, 'inputs': [{'indexed': true, 'name': '_from', 'type': 'address'}, {'indexed': true, 'name': '_target', 'type': 'address'}, {'indexed': false, 'name': '_claimId', 'type': 'string'}], 'name': 'ClaimMade', 'type': 'event'}]
+  const claimAbi = [{"constant":false,"inputs":[{"name":"_claimId","type":"string"}],"name":"getClaimConfirmers","outputs":[{"name":"confirmers","type":"address[]"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"},{"name":"","type":"uint256"}],"name":"trusted","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_claimId","type":"string"},{"name":"claimant","type":"address"}],"name":"confirm","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"},{"name":"","type":"uint256"}],"name":"claims","outputs":[{"name":"","type":"string"}],"payable":false,"type":"function"},{"constant":false,"inputs":[],"name":"whoami","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"peeps","type":"address[]"},{"name":"depth","type":"int8"}],"name":"getTrustedClaims","outputs":[{"name":"","type":"address[]"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_claimId","type":"string"}],"name":"claim","outputs":[],"payable":false,"type":"function"}]
   const claimContract = web3.eth.contract(claimAbi)
-  const claim = claimContract.at('0xf9c7ce3e77f7cc56657d99b28b9c70248ae2b6d6')
+  const claims = claimContract.at('XXX')
 
-  const target = '0x375c21b796facc074939e601c6320147d7344542'
-  const claimId = '/ipfs/QmXr74i6cuBtFVD7idvRVs4dyZt7wy2Sqgp1FziphLTHCK'
+  // const claimer = '0x375c21b796facc074939e601c6320147d7344542'   
+  // const confirmer = '0xca35b7d915458ef540ade6068dfe2f44e8fa733c'
+  const claimId = 'QmXr74i6cuBtFVD7idvRVs4dyZt7wy2Sqgp1FziphLTHCK'
 
-  d('creating attestation...')
+  d('creating claim...')
 
-  claim.attest('0x375c21b796facc074939e601c6320147d7344542', text, function(error, txhash) {
+  claims.claim(claimId, (error, txhash) => {
     if (error) {
       console.log(error)
       return
     }
-    $('#uport-status-txhash').text(txhash)
-    $('#uport-status-txhash').attr('href', 'https://ropsten.io/tx/' + txhash)
+    console.log("success! " + txhash )
+    console.log('https://ropsten.io/tx/' + txhash)
   })
 }
 
