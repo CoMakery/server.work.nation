@@ -11,9 +11,9 @@ const appName = 'Work.nation'
 const contractAddress = '0xce1cce5af3d76e0eb4d49b3d625cbb6fceb744df'
 const clientId = '0xa517fa10cba16682664d54a5c8baa0d2604fe402'
 // const signer = SimpleSigner(appPrivateKey)
-const connect1 = new Connect(appName, { clientId })
+const connect = new Connect(appName, { clientId })
 
-const web3 = connect1.getWeb3()
+const web3 = connect.getWeb3()
 
 let state = {
   userUportId: '',
@@ -72,7 +72,7 @@ const attest = () => {
 }
 
 const uportConnect = () => {
-  connect1.requestCredentials()
+  connect.requestCredentials()
   .then((credentials) => {
     console.log(JSON.stringify(credentials, null, 4))
     state.userUportId = credentials.address

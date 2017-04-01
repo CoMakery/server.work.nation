@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
-  root 'projects#index'
+  root 'authentications#new'
+  
   get 'projects/index'
+
+  resources :authentications, only: [:new, :create]
+  get '/login', to: 'authentications#new', as: 'login'
 end
