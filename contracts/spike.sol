@@ -1,29 +1,19 @@
 pragma solidity ^0.4.9;
 
+
 contract Claims {
 
-//    {claimant(address) : claim(string)[] }
     mapping (address => string[]) public claims;
 
-//    {claim : confirmer(address)[]}
     mapping (string => address[]) claimConfirmers;
 
-//    {address : trusted(address)[] }
     mapping (address => address[]) public trusted;
-
-//    function Claim() {
-//        claims = {};
-//        claimConfirmers = {}; 
-//    }
 
     function whoami() returns (address) {
         return msg.sender;
     }
 
     function claim(string _claimId) {
-//        if (claims[msg.sender].empty?) {
-//            claims[msg.sender] = [_claimId];
-//        } 
         claims[msg.sender].push(_claimId);
     }
 
@@ -37,7 +27,7 @@ contract Claims {
         return claimConfirmers[_claimId];
     }
 
-    function getTrustedClaims(address[] peeps, int8 depth) returns(address[]) {
+    function getTrustedClaims(address[] peeps, int8 depth) returns (address[]) {
         return trusted[msg.sender];
     //        Return ppl if depth == 0
     //        //newPpl = trusted[msg.sender]
@@ -49,8 +39,6 @@ contract Claims {
     //        getClaimConfirmers(ipfs-claim)
     }
 }
-
-
 
 
 //contract Claim {
