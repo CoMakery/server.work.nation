@@ -11,9 +11,6 @@ class UportUser {
   static login(event) {
     event.preventDefault()
     event.stopPropagation()
-    debugger
-
-    event.target.parentElement.submit()
 
     connect.requestCredentials()
     .then((credentials) => {
