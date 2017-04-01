@@ -18,7 +18,7 @@ contract Claims {
     }
 
     function confirm(string _claimId, address claimant) {
-        // TODO reject confirm of self
+    // TODO reject confirm of self
         claimConfirmers[_claimId].push(msg.sender);
         trusted[msg.sender].push(claimant);
     }
