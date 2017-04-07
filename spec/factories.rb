@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  SKILL = %w{UX Design Ruby Elixir Javascript} +
+  SKILL = %w{UX Design Ruby Elixir Javascript Java Ethereum Bitcoin C++ IPFS webtorrent uPort} +
       ["growth hacking", "training design", "project management", "product design",
        "online marketing", "hardware hacking", "security reviews"]
 
