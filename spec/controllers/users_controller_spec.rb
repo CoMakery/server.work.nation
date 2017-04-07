@@ -22,7 +22,7 @@ RSpec.describe UsersController, type: :controller do
       before { get :show, params: {id: user.to_param}, session: valid_session }
 
       specify { expect(json).to eq({
-                                       'uport_address' => '0x123',
+                                       'uport_address' => user.uport_address,
                                        'name' => user.name,
                                        'skills' => []
                                    })
@@ -35,7 +35,7 @@ RSpec.describe UsersController, type: :controller do
       before { get :show, params: {id: user.to_param}, session: valid_session }
 
       specify { expect(json).to eq({
-                                       'uport_address' => '0x123',
+                                       'uport_address' => user.uport_address,
                                        'name' => user.name,
                                        'skills' => [{'name' => 'Ruby on Rails',
                                                      'confirmation_count' => 3,

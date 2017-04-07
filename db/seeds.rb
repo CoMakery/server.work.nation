@@ -10,7 +10,7 @@
 if Rails.env.development?
   include FactoryGirl::Syntax::Methods
   100.times do
-    create :user, :random_skills
+    create :user, :random_skills, :random_address
   end
 end
 

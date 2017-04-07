@@ -3,24 +3,30 @@ FactoryGirl.define do
       ["growth hacking", "training design", "project management", "product design",
        "online marketing", "hardware hacking", "security reviews"]
 
+  sequence :uport_address do |n|
+    PatternExpander.new('0x'+('[+w]'*40))[n]
+  end
 
   factory :user do
     name { Faker::Name.name }
-    uport_address "0x123"
+    uport_address
 
     trait :random_skills do
-
       after(:create) do |user|
         SKILL.sample(rand(0..7)).each do |skill_name|
           create(:skill, user: user, name: skill_name)
         end
       end
     end
+
+    trait :random_address do
+      uport_address { PatternExpander.new('0x'+('[+w]'*40)).sample }
+    end
   end
 
   factory :user_with_skills, class: User do
     name { Faker::Name.name }
-    uport_address "0x123"
+    uport_address
     after(:create) do |user|
       create(:skill, :confirmed, user: user)
       create(:skill, :unconfirmed, user: user)
