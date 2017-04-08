@@ -3,18 +3,18 @@ require 'rails_helper'
 RSpec.describe UsersController, type: :controller do
   let(:valid_session) { {} }
 
-  describe "GET #index" do
+  describe 'GET #index' do
     let(:json) { JSON.parse(response.body) }
     let!(:user) { create :user }
 
     before { get :index, params: {}, session: valid_session }
 
-    specify { expect(json.first["uport_address"]).to eq(user.uport_address) }
+    specify { expect(json.first['uportAddress']).to eq(user.uport_address) }
 
-    specify { expect(json.first["name"]).to eq(user.name) }
+    specify { expect(json.first['name']).to eq(user.name) }
   end
 
-  describe "GET #show" do
+  describe 'GET #show' do
     describe 'for user without skills' do
       let!(:user) { create :user }
 
@@ -22,7 +22,7 @@ RSpec.describe UsersController, type: :controller do
       before { get :show, params: {id: user.to_param}, session: valid_session }
 
       specify { expect(json).to eq({
-                                       'uport_address' => user.uport_address,
+                                       'uportAddress' => user.uport_address,
                                        'name' => user.name,
                                        'skills' => []
                                    })
@@ -35,15 +35,15 @@ RSpec.describe UsersController, type: :controller do
       before { get :show, params: {id: user.to_param}, session: valid_session }
 
       specify { expect(json).to eq({
-                                       'uport_address' => user.uport_address,
+                                       'uportAddress' => user.uport_address,
                                        'name' => user.name,
                                        'skills' => [{'name' => 'Ruby on Rails',
-                                                     'confirmation_count' => 3,
-                                                     'project_count' => 5,
+                                                     'confirmationCount' => 3,
+                                                     'projectCount' => 5,
                                                     },
                                                     {'name' => 'Elixir',
-                                                     'confirmation_count' => 0,
-                                                     'project_count' => 0,
+                                                     'confirmationCount' => 0,
+                                                     'projectCount' => 0,
                                                     },
                                        ]
                                    })
