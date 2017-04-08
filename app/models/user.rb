@@ -12,7 +12,7 @@ class User < ApplicationRecord
   def as_json options={}
     {
         name: name,
-        uport_address: uport_address,
+        uportAddress: uport_address,
         skills: skills.map(&:as_json)
     }
   end

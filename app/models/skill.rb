@@ -4,8 +4,8 @@ class Skill < ApplicationRecord
   def as_json options={}
     {
         name: name,
-        confirmation_count: confirmation_count,
-        project_count: project_count
+        confirmationCount: confirmation_count,
+        projectCount: project_count
     }
   end
 end
