@@ -20,7 +20,8 @@ FactoryGirl.define do
     end
 
     trait :random_address do
-      uport_address { PatternExpander.new('0x'+('[+w]'*40)).sample }
+      # uport_address { PatternExpander.new('0x'+('[+w]'*40)).sample }
+      uport_address { '0x' + 40.times.map{ ( ('0'..'9').to_a + ('a'..'f').to_a ) .sample }.join }
     end
   end
 
