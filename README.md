@@ -4,12 +4,10 @@
 
 From the console
 
-
     bundle install
     rake db:setup
 
-
-To run tests
+## To run tests
 
     rspec
 
