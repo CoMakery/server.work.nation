@@ -1,4 +1,5 @@
 FactoryGirl.define do
+  BASE58_ALPHABET = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz'
   SKILL = %w{UX Design Ruby Elixir Javascript Java Ethereum Bitcoin C++ IPFS webtorrent uPort} +
       ["growth hacking", "training design", "project management", "product design",
        "online marketing", "hardware hacking", "security reviews"]
@@ -59,7 +60,7 @@ FactoryGirl.define do
 
   factory :confirmation do
     rating { [0.5, 1].sample }
-    ipfs_reputon_key { "Qm" + 44.times.map{ '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz'.split('').sample }.join }
+    ipfs_reputon_key { "Qm" + 44.times.map{ BASE58_ALPHABET.split('').sample }.join }
 
     trait :random_skill do
       skill_id { Skill.all.sample.id }
