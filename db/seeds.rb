@@ -8,15 +8,22 @@
 
 
 if Rails.env.development?
+  USERS = 10
+
   include FactoryGirl::Syntax::Methods
-  100.times do
+  USERS.times do
     create :user, :random_skills, :random_address
   end
 
   harlan = User.create! name: 'Harlan T Wood', uport_address: '0x57fab088be2f8bfd5d4cbf849c2568672e4f3db3'
-  harlan.skills.create! name: 'Ruby', project_count: 17, confirmation_count: 10
-  harlan.skills.create! name: 'Ethereum', project_count: 4, confirmation_count: 7
-  harlan.skills.create! name: 'uPort', project_count: 1, confirmation_count: 1
+  harlan.skills.create! name: 'Ruby', project_count: 17
+  harlan.skills.create! name: 'Ethereum', project_count: 4
+  harlan.skills.create! name: 'uPort', project_count: 1
+
+  (USERS * 10).times do
+    create :confirmation, :random_skill, :random_confirmer
+  end
+
 end
 
 

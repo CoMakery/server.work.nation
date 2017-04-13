@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative '../rails_helper'
 
 RSpec.describe UsersController, type: :controller do
   let(:valid_session) { {} }
@@ -35,8 +35,8 @@ RSpec.describe UsersController, type: :controller do
       before { get :show, params: {id: user.to_param}, session: valid_session }
 
       specify { expect(json).to eq({
-                                       'uportAddress' => user.uport_address,
                                        'name' => user.name,
+                                       'uportAddress' => user.uport_address,
                                        'skills' => [{'name' => 'Ruby on Rails',
                                                      'confirmationCount' => 3,
                                                      'projectCount' => 5,

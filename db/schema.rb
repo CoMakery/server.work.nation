@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170407032233) do
+ActiveRecord::Schema.define(version: 20170412181238) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "confirmations", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "skill_id"
+    t.integer "claimant_id"
+    t.float "rating"
+    t.text "ipfs_reputon_key"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "projects", force: :cascade do |t|
     t.string "name"
@@ -25,7 +35,8 @@ ActiveRecord::Schema.define(version: 20170407032233) do
     t.integer "user_id"
     t.text "name"
     t.integer "project_count", default: 0
-    t.integer "confirmation_count", default: 0
+    t.integer "confirmations_count", default: 0
+    t.text "ipfs_reputon_key"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
