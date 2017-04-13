@@ -2,7 +2,7 @@
 # The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
 
 if Rails.env.development? || ENV['ALLOW_SEED_DATA']
-  USERS = Integer(ENV['SEED_DATA_USERS'] || 10)
+  USERS = Integer(ENV['SEED_DATA_USERS'] || 0)
 
   include FactoryGirl::Syntax::Methods
   USERS.times do
