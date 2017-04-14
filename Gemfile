@@ -8,6 +8,7 @@ ruby '2.3.1'
 
 # gem 'airbrake'
 gem 'awesome_print'
+gem 'easy_shell'
 gem 'pg'
 gem 'puma'
 gem 'rack-cors' # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
