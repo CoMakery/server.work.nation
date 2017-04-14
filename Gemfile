@@ -9,6 +9,8 @@ ruby '2.3.1'
 # gem 'airbrake'
 gem 'awesome_print'
 gem 'easy_shell'
+gem 'factory_girl_rails'  # used on staging for seed data
+gem 'faker'               # used on staging for seed data
 gem 'pg'
 gem 'puma'
 gem 'rack-cors' # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
@@ -19,8 +21,6 @@ group :development, :test do
   gem 'pry-byebug'
   gem 'pry-rails'
   gem 'rspec-rails'
-  gem 'factory_girl_rails'
-  gem 'faker'
   gem 'pattern_expander'
 end
 
