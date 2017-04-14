@@ -1,5 +1,7 @@
 class User < ApplicationRecord
   has_many :skills
+  has_many :confirmations
+
 
   def self.find(input)
     find_by_uport_address(input)

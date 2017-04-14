@@ -22,24 +22,23 @@ FactoryGirl.define do
 
     trait :random_address do
       # uport_address { PatternExpander.new('0x'+('[+w]'*40)).sample }
-      uport_address { '0x' + 40.times.map{ ( ('0'..'9').to_a + ('a'..'f').to_a ) .sample }.join }
+      uport_address { '0x' + 40.times.map { (('0'..'9').to_a + ('a'..'f').to_a).sample }.join }
+    end
+
+    trait :with_skills do
+      after(:create) do |user|
+        create(:skill, :confirmed, user: user)
+        create(:skill, :unconfirmed, user: user)
+      end
     end
   end
 
-  factory :user_with_skills, class: User do
-    name { Faker::Name.name }
-    uport_address
-    after(:create) do |user|
-      create(:skill, :confirmed, user: user)
-      create(:skill, :unconfirmed, user: user)
-    end
-  end
 
   factory :skill do
     name { SKILL.sample }
 
     transient do
-      count_seed { rand(0..8)}
+      count_seed { rand(0..8) }
     end
 
     project_count { count_seed }
@@ -53,14 +52,20 @@ FactoryGirl.define do
       name "Ruby on Rails"
       project_count 5
       after(:create) do |skill|
-        3.times { skill.confirmations << create(:confirmation, skill_id: skill.id) }
+        3.times do
+          create :confirmation,
+                 skill_id: skill.id
+        end
       end
     end
   end
 
   factory :confirmation do
     rating { [0.5, 1].sample }
-    ipfs_reputon_key { "Qm" + 44.times.map{ BASE58_ALPHABET.split('').sample }.join }
+    ipfs_reputon_key { "Qm" + 44.times.map { BASE58_ALPHABET.split('').sample }.join }
+
+    claimant { create :user }
+    user { create :user }
 
     trait :random_skill do
       skill_id { Skill.all.sample.id }
@@ -68,7 +73,7 @@ FactoryGirl.define do
     end
 
     trait :random_confirmer do
-      user_id { (User.all - [User.find_by_id(claimant_id)]).sample.id }
+      claimant_id { (User.all - [User.find_by_id(user_id)]).sample.id }
     end
   end
 
