@@ -31,11 +31,11 @@ RSpec.describe UsersController, type: :controller do
 
     describe 'for user with skills' do
       let!(:user) { create :user, :with_skills }
-      let(:json) { JSON.parse(response.body) }
+      let(:data) { JSON.parse(response.body) }
       before { get :show, params: { id: user.to_param }, session: valid_session }
 
       specify do
-        expect(json).to eq({
+        expect(data).to eq({
             'name' => user.name,
             'uportAddress' => user.uport_address,
             'skills' => [
@@ -46,17 +46,17 @@ RSpec.describe UsersController, type: :controller do
                     'ipfsReputonKey' => 'Qmzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz',
                     'confirmations' => [
                         {
+                            "confirmer"=>"0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaf",
+                            "rating"=>1.0,
+                            "ipfsReputonKey"=>"Qmzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+                        },
+                        {
                             "confirmer"=>"0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaag",
                             "rating"=>1.0,
                             "ipfsReputonKey"=>"Qmzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
                         },
                         {
-                            "confirmer"=>"0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaai",
-                            "rating"=>1.0,
-                            "ipfsReputonKey"=>"Qmzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
-                        },
-                        {
-                            "confirmer"=>"0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaak",
+                            "confirmer"=>"0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaah",
                             "rating"=>1.0,
                             "ipfsReputonKey"=>"Qmzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
                         },
