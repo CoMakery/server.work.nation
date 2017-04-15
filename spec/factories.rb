@@ -43,6 +43,8 @@ FactoryGirl.define do
 
     project_count { count_seed }
 
+    ipfs_reputon_key { "Qm" + 44.times.map { 'z' }.join }
+
     trait :unconfirmed do
       name "Elixir"
       project_count 0

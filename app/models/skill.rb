@@ -6,7 +6,8 @@ class Skill < ApplicationRecord
     {
         name: name,
         confirmationCount: confirmations_count,
-        projectCount: project_count
+        projectCount: project_count,
+        ipfsReputonKey: ipfs_reputon_key,
     }
   end
 end
