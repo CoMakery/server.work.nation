@@ -9,7 +9,7 @@ if Rails.env.development? || ENV['ALLOW_SEED_DATA']
     create :user, :random_skills, :random_address
   end
 
-  harlan = User.create! name: 'Harlan T Wood', uport_address: '0x45e8a3ca399f5c70dc30cc991035d0357a5bff79'
+  harlan = User.create! name: 'Harlan T Wood', uport_address: '0x01d3b5eaa2e305a1553f0e2612353c94e597449e'
   harlan.skills.create! name: 'Ruby', project_count: 17
   harlan.skills.create! name: 'Ethereum', project_count: 4
   harlan.skills.create! name: 'uPort', project_count: 1
