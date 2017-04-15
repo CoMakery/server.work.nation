@@ -41,15 +41,33 @@ RSpec.describe UsersController, type: :controller do
             'skills' => [
                 {
                     'name' => 'Ruby on Rails',
-                    'ipfsReputonKey' => 'Qmzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz',
                     'confirmationCount' => 3,
                     'projectCount' => 5,
+                    'ipfsReputonKey' => 'Qmzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz',
+                    'confirmations' => [
+                        {
+                            "confirmer"=>"0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaag",
+                            "rating"=>1.0,
+                            "ipfsReputonKey"=>"Qmzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+                        },
+                        {
+                            "confirmer"=>"0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaai",
+                            "rating"=>1.0,
+                            "ipfsReputonKey"=>"Qmzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+                        },
+                        {
+                            "confirmer"=>"0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaak",
+                            "rating"=>1.0,
+                            "ipfsReputonKey"=>"Qmzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+                        },
+                    ],
                 },
                 {
                     'name' => 'Elixir',
-                    'ipfsReputonKey' => 'Qmzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz',
                     'confirmationCount' => 0,
                     'projectCount' => 0,
+                    'ipfsReputonKey' => 'Qmzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz',
+                    'confirmations' => [],
                 },
             ]
         })

@@ -20,6 +20,6 @@ if Rails.env.development? || ENV['ALLOW_SEED_DATA']
   noah.skills.create! name: 'uPort', project_count: 1
 
   (USERS * 10).times do
-    create :confirmation, :random_skill, :random_confirmer
+    create :confirmation, :random_skill, :random_confirmer, :random_ipfs
   end
 end

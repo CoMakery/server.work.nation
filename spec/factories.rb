@@ -63,8 +63,8 @@ FactoryGirl.define do
   end
 
   factory :confirmation do
-    rating { [0.5, 1].sample }
-    ipfs_reputon_key { "Qm" + 44.times.map { BASE58_ALPHABET.split('').sample }.join }
+    rating { 1 }
+    ipfs_reputon_key { "Qm" + 44.times.map { 'z' }.join }
 
     claimant { create :user }
     user { create :user }
@@ -76,6 +76,14 @@ FactoryGirl.define do
 
     trait :random_confirmer do
       claimant_id { (User.all - [User.find_by_id(user_id)]).sample.id }
+    end
+
+    trait :random_ipfs do
+      ipfs_reputon_key { "Qm" + 44.times.map { BASE58_ALPHABET.split('').sample }.join }
+    end
+
+    trait :random_rating do
+      rating { [0.5, 1].sample }
     end
   end
 
