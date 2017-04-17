@@ -2,7 +2,7 @@ class Confirmation < ApplicationRecord
   belongs_to :skill,
       counter_cache: true # to use cached db column: skill.confirmations_count (not skill.confirmations.count)
   belongs_to :user
-  belongs_to :claimant, foreign_key: :claimant_id, class_name: User
+  belongs_to :claimant, foreign_key: :claimant_id, class_name: 'User'
 
   validates_presence_of :skill_id, :user_id, :claimant_id, :rating, :ipfs_reputon_key
   validates_uniqueness_of :ipfs_reputon_key
