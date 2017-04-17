@@ -2,10 +2,14 @@ FactoryGirl.define do
   BASE58_ALPHABET = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz'
   SKILL = %w{UX Design Ruby Elixir Javascript Java Ethereum Bitcoin C++ IPFS webtorrent uPort} +
       ["growth hacking", "training design", "project management", "product design",
-       "online marketing", "hardware hacking", "security reviews"]
+          "online marketing", "hardware hacking", "security reviews"]
 
   sequence :uport_address do |n|
     PatternExpander.new('0x'+('[+w]'*40))[n]
+  end
+
+  sequence :ipfs_reputon_key do |n|
+    PatternExpander.new('Qm'+('[+w]'*44))[n]
   end
 
   factory :user do
@@ -21,7 +25,6 @@ FactoryGirl.define do
     end
 
     trait :random_address do
-      # uport_address { PatternExpander.new('0x'+('[+w]'*40)).sample }
       uport_address { '0x' + 40.times.map { (('0'..'9').to_a + ('a'..'f').to_a).sample }.join }
     end
 
@@ -43,7 +46,7 @@ FactoryGirl.define do
 
     project_count { count_seed }
 
-    ipfs_reputon_key { "Qm" + 44.times.map { 'z' }.join }
+    ipfs_reputon_key #{ "Qm" + 44.times.map { 'z' }.join }
 
     trait :unconfirmed do
       name "Elixir"
@@ -56,7 +59,7 @@ FactoryGirl.define do
       after(:create) do |skill|
         3.times do
           create :confirmation,
-                 skill_id: skill.id
+              skill_id: skill.id
         end
       end
     end
@@ -64,7 +67,7 @@ FactoryGirl.define do
 
   factory :confirmation do
     rating { 1 }
-    ipfs_reputon_key { "Qm" + 44.times.map { 'z' }.join }
+    ipfs_reputon_key # { "Qm" + 44.times.map { 'z' }.join }
 
     user_id { create(:user).id }
     claimant_id { Skill.find(skill_id).user_id }

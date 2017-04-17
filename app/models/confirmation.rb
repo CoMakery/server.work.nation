@@ -5,6 +5,7 @@ class Confirmation < ApplicationRecord
   belongs_to :claimant, foreign_key: :claimant_id, class_name: User
 
   validates_presence_of :skill_id, :user_id, :claimant_id, :rating, :ipfs_reputon_key
+  validates_uniqueness_of :ipfs_reputon_key
 
   validates :claimant_id,
       exclusion: { message: "can't self confirm",

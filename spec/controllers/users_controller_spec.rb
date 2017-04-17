@@ -43,22 +43,22 @@ RSpec.describe UsersController, type: :controller do
                     'name' => 'Ruby on Rails',
                     'confirmationCount' => 3,
                     'projectCount' => 5,
-                    'ipfsReputonKey' => 'Qmzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz',
+                    'ipfsReputonKey' => 'Qmaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab',
                     'confirmations' => [
                         {
                             "confirmer"=>"0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaf",
                             "rating"=>1.0,
-                            "ipfsReputonKey"=>"Qmzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+                            "ipfsReputonKey"=>"Qmaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaac"
                         },
                         {
                             "confirmer"=>"0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaag",
                             "rating"=>1.0,
-                            "ipfsReputonKey"=>"Qmzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+                            "ipfsReputonKey"=>"Qmaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaad"
                         },
                         {
                             "confirmer"=>"0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaah",
                             "rating"=>1.0,
-                            "ipfsReputonKey"=>"Qmzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+                            "ipfsReputonKey"=>"Qmaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaae"
                         },
                     ],
                 },
@@ -66,7 +66,7 @@ RSpec.describe UsersController, type: :controller do
                     'name' => 'Elixir',
                     'confirmationCount' => 0,
                     'projectCount' => 0,
-                    'ipfsReputonKey' => 'Qmzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz',
+                    'ipfsReputonKey' => 'Qmaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaf',
                     'confirmations' => [],
                 },
             ]
