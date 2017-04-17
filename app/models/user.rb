@@ -2,6 +2,8 @@ class User < ApplicationRecord
   has_many :skills
   has_many :confirmations
 
+  validates_presence_of :uport_address
+  validates_uniqueness_of :uport_address
 
   def self.find(input)
     find_by_uport_address(input)
