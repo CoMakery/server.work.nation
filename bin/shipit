@@ -6,7 +6,8 @@ bin/rspec
 
 # load seed data in test env (make sure seeds work)
 bin/rails db:environment:set RAILS_ENV=test
-RAILS_ENV=test ALLOW_SEED_DATA=true SEED_DATA_USERS=3 rake db:setup rake db:schema:load
+RAILS_ENV=test ALLOW_SEED_DATA=true SEED_DATA_USERS=3 rake db:setup
+rake db:test:prepare
 bin/rails db:environment:set RAILS_ENV=development
 
 brakeman --exit-on-warn --quiet
