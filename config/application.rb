@@ -31,5 +31,9 @@ module WorkNation
     config.api_only = true
 
     config.project_slug = 'worknation'
+
+    # lib/ is for code that is entirely independent of your Rails app
+    # app/lib/ is for code that expects Rails (esp. models) but which is not itself a model
+    config.autoload_paths << Rails.root.join("app", "lib")
   end
 end
