@@ -1,4 +1,4 @@
-# Work.nation
+# Work.nation Server
 
 ## Set up
 
@@ -23,3 +23,17 @@
 ## CI
 
 See https://circleci.com/gh/CoMakery/server.work.nation
+
+## Ethereum 
+
+### Development on OSX
+
+```sh
+brew update
+# brew upgrade  # Optional: probably not needed, and can take a long time
+brew tap ethereum/ethereum
+brew install solidity
+solc --version
+```
+
+If all went well, you should have `solc` version 0.4.10*
