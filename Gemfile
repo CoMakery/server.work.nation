@@ -6,7 +6,7 @@ ruby '2.3.1'
 #   "https://github.com/#{repo_name}.git"
 # end
 
-# gem 'airbrake'
+gem 'airbrake'
 gem 'awesome_print'
 gem 'colorize'
 gem 'easy_shell'

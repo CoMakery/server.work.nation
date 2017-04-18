@@ -3,7 +3,6 @@ module Worknation
     CONTRACT_ABI = JSON.parse %([{"constant":false,"inputs":[{"name":"claim","type":"string"}],"name":"getSigner","outputs":[{"name":"_signer","type":"address"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_claim","type":"string"}],"name":"put","outputs":[{"name":"_success","type":"bool"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"index","type":"uint256"}],"name":"getClaim","outputs":[{"name":"_claim","type":"string"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"claimCount","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"claims","outputs":[{"name":"","type":"string"}],"payable":false,"type":"function"},{"payable":false,"type":"fallback"}])
 
     def self.get_latest_reputons(known_claim_count)
-      errors = []
       client = Ethereum::HttpClient.new(ENV['ETHEREUM_RPC_URL'])
 
       contract = Ethereum::Contract.create(
@@ -16,13 +15,11 @@ module Worknation
       claim_count = contract.call.claim_count
 
       (known_claim_count + 1...claim_count).each do |claim_index|
-        get_claim(claim_index, contract, errors)
+        get_claim(claim_index, contract)
       end
-
-      raise ReputonError, errors.map(&:message) if errors.present?
     end
 
-    def self.get_claim(claim_index, contract, errors)
+    def self.get_claim(claim_index, contract)
       log "\n"
       log "Claim ##{claim_index}".purple
       ipfs_key = contract.call.get_claim(claim_index)
@@ -34,16 +31,14 @@ module Worknation
       log response.code
       if response.code != 200
         # raise WorkNation::ReputonNotFound.new(), "Error fetching #{ipfs_url.inspect}: #{response.code.inspect}\n#{response.body}"
-        e = ReputonInvalid.new("Error fetching #{ipfs_url} -- #{response.body} -- #{response.code}")
-        errors << e
-        error e
+        handle_error ReputonNotFound.new("Error fetching #{ipfs_url} -- #{response.body} -- #{response.code}")
       end
 
       reputons_envelope = JSON.parse(response.body)
       log reputons_envelope
       application = reputons_envelope['application']
       if application != 'skills'
-        errors << ReputonInvalid.new("Expected application 'skills' but was: #{reputon['application']}.\nReputons:\n#{JSON.pretty_unparse(reputons_envelope)}")
+        errors ReputonInvalid.new("Expected application 'skills' but was: #{reputon['application']}.\nReputons:\n#{JSON.pretty_unparse(reputons_envelope)}")
       end
 
       reputons_data = reputons_envelope['reputons']
@@ -52,8 +47,7 @@ module Worknation
           reputon = Reputon.new(reputon_data, signer, ipfs_key)
           reputon.save!
         rescue ReputonError => e
-          error e
-          errors << e
+          handle_error e
         end
       end
     end
@@ -62,8 +56,9 @@ module Worknation
       Rails.logger.info msg
     end
 
-    def self.error(e)
-      Rails.logger.error e.message.to_s.red
+    def self.handle_error(error)
+      Rails.logger.error error.message.to_s.red
+      notify_airbrake error
     end
 
     def initialize(data, signer, ipfs_key)
