@@ -15,11 +15,23 @@ AllCops:
     - '**/config.ru'
   TargetRubyVersion: 2.3
 
-Metrics/LineLength:
-  Enabled: false
+Metrics/AbcSize:
+  Exclude:
+    - 'app/lib/worknation/reputon.rb'
 
 Metrics/BlockLength:
   Enabled: false
+
+Metrics/ClassLength:
+  Exclude:
+    - 'app/lib/worknation/reputon.rb'
+
+Metrics/LineLength:
+  Enabled: false
+
+Metrics/MethodLength:
+  Exclude:
+    - 'app/lib/worknation/reputon.rb'
 
 Performance/TimesMap:
   Exclude:

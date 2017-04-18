@@ -16,43 +16,46 @@ module Worknation
       claim_count = contract.call.claim_count
 
       (known_claim_count + 1...claim_count).each do |claim_index|
-        log "\n"
-        log "Claim ##{claim_index}".purple
-        ipfs_key = contract.call.get_claim(claim_index)
-        signer = contract.call.get_signer(ipfs_key)
-
-        log ipfs_url = "https://ipfs.io/ipfs/#{ipfs_key}"
-        response = HTTParty.get(ipfs_url)
-        # puts response.body, response.code #, response.message, response.headers.inspect
-        log response.code
-        if response.code != 200
-          # raise WorkNation::ReputonNotFound.new(), "Error fetching #{ipfs_url.inspect}: #{response.code.inspect}\n#{response.body}"
-          e = ReputonInvalid.new("Error fetching #{ipfs_url} -- #{response.body} -- #{response.code}")
-          errors << e
-          error e
-        end
-
-        reputons_envelope = JSON.parse(response.body)
-        log reputons_envelope
-        application = reputons_envelope['application']
-        if application != 'skills'
-          errors << ReputonInvalid.new("Expected application 'skills' but was: #{reputon['application']}.\nReputons:\n#{JSON.pretty_unparse(reputons_envelope)}")
-        end
-
-        reputons_data = reputons_envelope['reputons']
-        reputons_data.each do |reputon_data|
-          begin
-            reputon = Reputon.new(reputon_data, signer, ipfs_key)
-            reputon.save!
-          rescue ReputonError => e
-            error e
-            errors << e
-          end
-        end
+        get_claim(claim_index, contract, errors)
       end
 
       raise ReputonError, errors.map(&:message) if errors.present?
-      # reputons.flatten
+    end
+
+    def self.get_claim(claim_index, contract, errors)
+      log "\n"
+      log "Claim ##{claim_index}".purple
+      ipfs_key = contract.call.get_claim(claim_index)
+      signer = contract.call.get_signer(ipfs_key)
+
+      log ipfs_url = "https://ipfs.io/ipfs/#{ipfs_key}"
+      response = HTTParty.get(ipfs_url)
+      # puts response.body, response.code #, response.message, response.headers.inspect
+      log response.code
+      if response.code != 200
+        # raise WorkNation::ReputonNotFound.new(), "Error fetching #{ipfs_url.inspect}: #{response.code.inspect}\n#{response.body}"
+        e = ReputonInvalid.new("Error fetching #{ipfs_url} -- #{response.body} -- #{response.code}")
+        errors << e
+        error e
+      end
+
+      reputons_envelope = JSON.parse(response.body)
+      log reputons_envelope
+      application = reputons_envelope['application']
+      if application != 'skills'
+        errors << ReputonInvalid.new("Expected application 'skills' but was: #{reputon['application']}.\nReputons:\n#{JSON.pretty_unparse(reputons_envelope)}")
+      end
+
+      reputons_data = reputons_envelope['reputons']
+      reputons_data.each do |reputon_data|
+        begin
+          reputon = Reputon.new(reputon_data, signer, ipfs_key)
+          reputon.save!
+        rescue ReputonError => e
+          error e
+          errors << e
+        end
+      end
     end
 
     def self.log(msg)
