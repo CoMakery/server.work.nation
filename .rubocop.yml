@@ -1,4 +1,7 @@
 AllCops:
+  Include:
+    - '**/Rakefile'
+    - '**/config.ru'
   Exclude:
     - 'db/migrate/20170405074402_create_projects.rb'
     - 'db/migrate/20170406232832_create_users.rb'
@@ -6,6 +9,7 @@ AllCops:
     - 'db/migrate/20170412181238_create_confirmations.rb'
     - 'db/migrate/20170417234130_rename_columns.rb'
     - 'db/schema.rb'
+    - 'tmp/'
   TargetRubyVersion: 2.3
 
 Metrics/LineLength:
