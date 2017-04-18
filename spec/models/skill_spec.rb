@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative '../rails_helper'
 
 RSpec.describe Skill, type: :model do
   specify { expect(Skill.new.project_count).to eq(0) }

@@ -1,6 +1,6 @@
 class User < ApplicationRecord
-  has_many :skills
-  has_many :confirmations
+  has_many :skills, foreign_key: :skill_claimant_id
+  has_many :confirmations, foreign_key: :confirmer_id
 
   validates_presence_of :uport_address
   validates_uniqueness_of :uport_address

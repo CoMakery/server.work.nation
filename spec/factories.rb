@@ -69,16 +69,16 @@ FactoryGirl.define do
     rating { 1 }
     ipfs_reputon_key # { "Qm" + 44.times.map { 'z' }.join }
 
-    user_id { create(:user).id }
-    claimant_id { Skill.find(skill_id).user_id }
+    confirmer_id { create(:user).id }
+    skill_claimant_id { Skill.find(skill_id).skill_claimant_id }
 
     trait :random_skill do
       skill_id { Skill.all.sample.id }
-      claimant_id { Skill.find(skill_id).user_id }
+      skill_claimant_id { Skill.find(skill_id).skill_claimant_id }
     end
 
     trait :random_confirmer do
-      user_id { (User.all - [User.find_by_id(claimant_id)]).sample.id }
+      confirmer_id { (User.all - [User.find_by_id(skill_claimant_id)]).sample.id }
     end
 
     trait :random_ipfs do

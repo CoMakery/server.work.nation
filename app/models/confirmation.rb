@@ -1,15 +1,15 @@
 class Confirmation < ApplicationRecord
   belongs_to :skill,
       counter_cache: true # to use cached db column: skill.confirmations_count (not skill.confirmations.count)
-  belongs_to :user
-  belongs_to :claimant, foreign_key: :claimant_id, class_name: 'User'
+  belongs_to :user, foreign_key: :confirmer_id
+  belongs_to :claimant, foreign_key: :skill_claimant_id, class_name: 'User'
 
-  validates_presence_of :skill_id, :user_id, :claimant_id, :rating, :ipfs_reputon_key
+  validates_presence_of :skill_id, :confirmer_id, :skill_claimant_id, :rating, :ipfs_reputon_key
   validates_uniqueness_of :ipfs_reputon_key
 
-  validates :claimant_id,
+  validates :skill_claimant_id,
       exclusion: { message: "can't self confirm",
-          in: -> (x) { [x.user_id] } }
+          in: -> (x) { [x.confirmer_id] } }
 
   def as_json options={}
     {
