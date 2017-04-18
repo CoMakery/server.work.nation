@@ -11,3 +11,6 @@ From the console
 
     rspec
 
+## CI
+
+https://circleci.com/gh/CoMakery/server.work.nation
