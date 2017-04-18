@@ -10,8 +10,7 @@ class Skill < ApplicationRecord
       name: name,
       confirmationCount: confirmations_count,
       projectCount: project_count,
-      ipfsReputonKey: ipfs_reputon_key,
-      confirmations: confirmations.map(&:as_json)
+      ipfsReputonKey: ipfs_reputon_key
     }
   end
 end

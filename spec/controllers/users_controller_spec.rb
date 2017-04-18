@@ -43,31 +43,13 @@ RSpec.describe UsersController, type: :controller do
                                'name' => 'Ruby on Rails',
                                'confirmationCount' => 3,
                                'projectCount' => 5,
-                               'ipfsReputonKey' => 'Qmaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab',
-                               'confirmations' => [
-                                 {
-                                   'confirmer' => '0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaf',
-                                   'rating' => 1.0,
-                                   'ipfsReputonKey' => 'Qmaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaac'
-                                 },
-                                 {
-                                   'confirmer' => '0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaag',
-                                   'rating' => 1.0,
-                                   'ipfsReputonKey' => 'Qmaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaad'
-                                 },
-                                 {
-                                   'confirmer' => '0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaah',
-                                   'rating' => 1.0,
-                                   'ipfsReputonKey' => 'Qmaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaae'
-                                 }
-                               ]
+                               'ipfsReputonKey' => 'Qmaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab'
                              },
                              {
                                'name' => 'Elixir',
                                'confirmationCount' => 0,
                                'projectCount' => 0,
-                               'ipfsReputonKey' => 'Qmaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaf',
-                               'confirmations' => []
+                               'ipfsReputonKey' => 'Qmaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaf'
                              }
                            ])
       end
