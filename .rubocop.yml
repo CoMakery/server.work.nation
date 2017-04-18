@@ -10,6 +10,7 @@ AllCops:
     - 'db/migrate/20170417234130_rename_columns.rb'
     - 'db/schema.rb'
     - 'tmp/**/*'
+    - 'vendor/**/*'
   TargetRubyVersion: 2.3
 
 Metrics/LineLength:
