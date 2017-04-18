@@ -19,6 +19,7 @@ RSpec.describe UsersController, type: :controller do
       let!(:user) { create :user }
 
       let(:json) { JSON.parse(response.body) }
+
       before { get :show, params: { id: user.to_param }, session: valid_session }
 
       specify do
@@ -31,6 +32,7 @@ RSpec.describe UsersController, type: :controller do
     describe 'for user with skills' do
       let!(:user) { create :user, :with_skills }
       let(:data) { JSON.parse(response.body) }
+
       before { get :show, params: { id: user.to_param }, session: valid_session }
 
       specify do

@@ -1,4 +1,4 @@
-#require: rubocop-rspec
+require: rubocop-rspec
 
 AllCops:
   Exclude:
@@ -28,6 +28,9 @@ Performance/TimesMap:
 
 Rails:
   Enabled: true
+
+RSpec/ExampleLength:
+  Enabled: false
 
 Style/AlignParameters:
   Enabled: true

@@ -30,6 +30,7 @@ group :development do
   gem 'pivotal_git_scripts'
   gem 'rails_best_practices'
   gem 'rubocop', require: false
+  gem 'rubocop-rspec'
   gem 'spring'
   gem 'spring-watcher-listen'
 end
