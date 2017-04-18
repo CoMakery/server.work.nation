@@ -9,9 +9,9 @@ fi
 
 # load seed data in test env (make sure db seeds work)
 bin/rails db:environment:set RAILS_ENV=test
-RAILS_ENV=test ALLOW_SEED_DATA=true SEED_DATA_USERS=3 rake db:setup
+RAILS_ENV=test ALLOW_SEED_DATA=true SEED_DATA_USERS=3 bundle exec rake db:setup
 bin/rails db:environment:set RAILS_ENV=development
-rake db:test:prepare
+bundle exec rake db:test:prepare
 
 rubocop --auto-correct --display-cop-names --fail-level autocorrect
 
