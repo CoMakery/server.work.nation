@@ -1,2 +1,36 @@
 AllCops:
+  Exclude:
+    - 'db/migrate/20170405074402_create_projects.rb'
+    - 'db/migrate/20170406232832_create_users.rb'
+    - 'db/migrate/20170407032233_create_skills.rb'
+    - 'db/migrate/20170412181238_create_confirmations.rb'
+    - 'db/migrate/20170417234130_rename_columns.rb'
+    - 'db/schema.rb'
   TargetRubyVersion: 2.3
+
+Metrics/LineLength:
+  Enabled: false
+
+Metrics/BlockLength:
+  Enabled: false
+
+Performance/TimesMap:
+  Exclude:
+    - 'bin/deploy'
+    - 'spec/factories.rb'
+
+Rails:
+  Enabled: true
+
+Style/AlignParameters:
+  Enabled: true
+  EnforcedStyle: with_fixed_indentation
+
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/IndentationConsistency:
+  Enabled: false

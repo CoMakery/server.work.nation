@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
 set -e -x
 
-bin/rspec --format documentation
+if [[ $CI ]]; then
+  bin/rspec --format documentation
+else
+  bin/rspec
+fi
 
 # load seed data in test env (make sure db seeds work)
 bin/rails db:environment:set RAILS_ENV=test
@@ -9,5 +13,12 @@ RAILS_ENV=test ALLOW_SEED_DATA=true SEED_DATA_USERS=3 rake db:setup
 bin/rails db:environment:set RAILS_ENV=development
 rake db:test:prepare
 
+rubocop --auto-correct --display-cop-names --fail-level autocorrect
+
 brakeman --exit-on-warn --quiet
 
+if [ [ $(git status --porcelain) ] && [ -z $CI ] ]; then
+  echo '*** Please stash or commit changes first ***'
+  git status
+  exit 1
+fi
