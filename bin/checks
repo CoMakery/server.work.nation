@@ -21,4 +21,4 @@ fi
 
 bin/rubocop
 
-bundle excec brakeman --exit-on-warn --quiet > /dev/null
+bundle exec brakeman --exit-on-warn --quiet > /dev/null
