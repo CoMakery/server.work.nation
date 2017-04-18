@@ -57,7 +57,7 @@ claim_count = contract.call.claim_count
   ap reputons
   application = reputons['application']
   if application != 'skills'
-    error "Expected application 'skills' but was: #{reputon['application']}"
+    error "Expected application 'skills' but was: #{reputon['application']}.\nReputons:\n#{JSON.pretty_unparse(reputons)}"
     next
   end
 
@@ -68,26 +68,36 @@ claim_count = contract.call.claim_count
     end
     if reputon['rater'] == reputon['rated']
       user = User.find_or_create_by(uport_address: reputon['rater'])
-      ap user.skills.create!(
-        name: reputon['assertion'],
-        ipfs_reputon_key: ipfs_key
-      )
+      skill = user.skills.find_by(ipfs_reputon_key: ipfs_key)
+      if skill.blank?
+        ap user.skills.create!(
+          name: reputon['assertion'],
+          ipfs_reputon_key: ipfs_key
+        )
+      end
     else
       # TODO: reject conf if normal rating not 0.5
 
       confirmer = User.find_or_create_by(uport_address: reputon['rater'])
       ap skill = Skill.find_by(ipfs_reputon_key: reputon['rated'])
+      if skill.blank?
+        error "No skill found for [#{reputon['rated']}].\nFull reputon:\n#{JSON.pretty_unparse(reputon)}"
+        next
+      end
       if address(confirmer.uport_address) == address(skill.user.uport_address)
         error "Attempting to self confirm, rejected.\nFull reputon:\n#{JSON.pretty_unparse(reputon)}"
         next
       end
-      ap confirmer.confirmations.create!(
-        user: confirmer,
-        skill: skill,
-        claimant: skill.user,
-        rating: reputon['rating'],
-        ipfs_reputon_key: ipfs_key
-      )
+      confirmation = Confirmation.find_by(ipfs_reputon_key: ipfs_key)
+      if confirmation.blank?
+        ap confirmer.confirmations.create!(
+          user: confirmer,
+          skill: skill,
+          claimant: skill.user,
+          rating: reputon['rating'],
+          ipfs_reputon_key: ipfs_key
+        )
+      end
     end
   end
 end
