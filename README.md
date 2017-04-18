@@ -20,6 +20,10 @@
     bin/rspec   # rspec only
     bin/rubocop # rubocop only
 
+## Push code
+
+    bin/shipit  # runs all checks and pushes only if checks pass
+
 ## CI
 
 See https://circleci.com/gh/CoMakery/server.work.nation
