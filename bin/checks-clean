@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+set -e -x
+
+if [[ $(git status --porcelain) ]]; then
+  set +x
+  echo '********************************************'
+  echo '********************************************'
+  echo '*   Please stash or commit changes first   *'
+  echo '********************************************'
+  echo '********************************************'
+  git status
+  exit 1
+fi
+

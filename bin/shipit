@@ -1,12 +1,7 @@
 #!/usr/bin/env bash
 set -e -x
 
-bin/checks
-
-if [[ $(git status --porcelain) ]]; then
-  echo '*** Please stash or commit changes first ***'
-  git status
-  exit 1
-else
-  git push origin HEAD
-fi
+bin/checks-clean
+bin/checks-all
+bin/checks-clean       # files may have been altered, eg by rubocop
+git push origin HEAD

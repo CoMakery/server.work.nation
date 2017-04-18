@@ -16,9 +16,10 @@
 
 ## Run tests and code checks
 
-    bin/checks  # run all checks
-    bin/rspec   # rspec only
-    bin/rubocop # rubocop only
+    bin/checks      # run faster checks
+    bin/checks-all  # run all checks
+    bin/rspec       # rspec only
+    bin/rubocop     # rubocop only
 
 ## Push code
 
