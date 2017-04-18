@@ -1,16 +1,14 @@
 module Worknation
   class Reputon
+    CONTRACT_ABI = JSON.parse %([{"constant":false,"inputs":[{"name":"claim","type":"string"}],"name":"getSigner","outputs":[{"name":"_signer","type":"address"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_claim","type":"string"}],"name":"put","outputs":[{"name":"_success","type":"bool"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"index","type":"uint256"}],"name":"getClaim","outputs":[{"name":"_claim","type":"string"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"claimCount","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"claims","outputs":[{"name":"","type":"string"}],"payable":false,"type":"function"},{"payable":false,"type":"fallback"}])
+
     def self.get_latest_reputons(known_claim_count)
       errors = []
       client = Ethereum::HttpClient.new(ENV['ETHEREUM_RPC_URL'])
 
-      contract_response = HTTParty.get('https://gist.githubusercontent.com/harlantwood/18c17ffa941fdddbe54e61b52726c4c7/raw')
-      contract = contract_response.body
-      contract_path = Rails.root.join('tmp', 'Claim.sol')
-      File.write(contract_path, contract)
-
       contract = Ethereum::Contract.create(
-        file: contract_path,
+        name: 'Claim',
+        abi: CONTRACT_ABI,
         address: '0x8cb4cb36e7cc72bb84f48daed7cb8071c3f55f8f',
         client: client
       )
