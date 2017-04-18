@@ -6,9 +6,9 @@ Rails.application.routes.draw do
   resources :projects
 
   unless Rails.env.development? || Rails.env.test?
-    Sidekiq::Web.use Rack::Auth::Basic do |username, password|
-      username.present? && password.present? &&
-        username == ENV['SIDEKIQ_USERNAME'] && password == ENV['SIDEKIQ_PASSWORD']
+    Sidekiq::Web.use Rack::Auth::Basic, 'Sidekiq' do |_username, password|
+      raise unless ENV['SIDEKIQ_PASSWORD'].length >= 8
+      Rack::Utils.secure_compare(ENV['SIDEKIQ_PASSWORD'], password)
     end
   end
   mount Sidekiq::Web, at: '/admin/sidekiq'

@@ -132,10 +132,4 @@ module Worknation
 
   class ReputonSignatureInvalid < ReputonError
   end
-
-  # def error(*args)
-  #   args.each do |arg|
-  #     puts arg.to_s.red
-  #   end
-  # end
 end

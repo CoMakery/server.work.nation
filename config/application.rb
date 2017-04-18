@@ -35,5 +35,17 @@ module WorkNation
     # lib/ is for code that is entirely independent of your Rails app
     # app/lib/ is for code that expects Rails (esp. models) but which is not itself a model
     config.autoload_paths << Rails.root.join('app', 'lib')
+
+    config.eager_load = false
+
+    if ENV['RAILS_LOG_TO_STDOUT'].present?
+      logger           = ActiveSupport::Logger.new(STDOUT)
+      logger.formatter = config.log_formatter
+      config.logger    = ActiveSupport::TaggedLogging.new(logger)
+    end
+
+    # Use a different logger for distributed setups.
+    # require 'syslog/logger'
+    # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
   end
 end
