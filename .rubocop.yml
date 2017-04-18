@@ -9,7 +9,7 @@ AllCops:
     - 'db/migrate/20170412181238_create_confirmations.rb'
     - 'db/migrate/20170417234130_rename_columns.rb'
     - 'db/schema.rb'
-    - 'tmp/'
+    - 'tmp/**/*'
   TargetRubyVersion: 2.3
 
 Metrics/LineLength:
@@ -32,6 +32,10 @@ Style/AlignParameters:
 
 Style/Documentation:
   Enabled: false
+
+Style/FileName:
+  Exclude:
+    - 'Gemfile'
 
 Style/FrozenStringLiteralComment:
   Enabled: false

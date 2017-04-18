@@ -19,6 +19,6 @@ if [ -z $CI ]; then
   bin/rails db:environment:set RAILS_ENV=development
 fi
 
-rubocop --auto-correct --display-cop-names --fail-level autocorrect
+bin/rubocop
 
 brakeman --exit-on-warn --quiet

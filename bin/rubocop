@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+set -e -x
+
+rubocop --auto-correct --fail-level autocorrect --display-cop-names
