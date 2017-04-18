@@ -1,0 +1,16 @@
+database:
+  override:
+    - bundle exec rake db:create db:migrate               # check that migrations run successfully
+    - bundle exec rake db:migrate VERSION=0               # migrate down
+    - git checkout db/schema.rb                           # revert to schema in repo
+    - bundle exec rake db:setup                           # load from schema + seeds
+
+test:
+  override:
+    - bin/checks
+
+deployment:
+  autodeploy:
+    branch: master
+    commands:
+      - bin/deploy staging $CIRCLE_SHA1

@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -e -x
+
+# load seed data in test env (make sure seeds work)
+bin/rails db:environment:set RAILS_ENV=test
+RAILS_ENV=test ALLOW_SEED_DATA=true SEED_DATA_USERS=3 rake db:setup
+bin/rails db:environment:set RAILS_ENV=development
+rake db:test:prepare
+
+brakeman --exit-on-warn --quiet
+
