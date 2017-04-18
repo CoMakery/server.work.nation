@@ -17,10 +17,7 @@
 !/log/.keep
 !/tmp/.keep
 
-/node_modules
-/yarn-error.log
-
 .byebug_history
-/public/packs
-/node_modules
 /zz.*
+/.env
+/.env.*

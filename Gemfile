@@ -32,9 +32,11 @@ end
 
 group :development do
   gem 'brakeman', require: false
+  gem 'foreman'
   gem 'listen'
   gem 'pivotal_git_scripts'
   gem 'rails_best_practices'
+  gem 'rerun'
   gem 'rubocop', require: false
   gem 'rubocop-rspec'
   gem 'spring'
