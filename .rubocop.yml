@@ -1,7 +1,6 @@
+#require: rubocop-rspec
+
 AllCops:
-  Include:
-    - '**/Rakefile'
-    - '**/config.ru'
   Exclude:
     - 'db/migrate/20170405074402_create_projects.rb'
     - 'db/migrate/20170406232832_create_users.rb'
@@ -11,6 +10,9 @@ AllCops:
     - 'db/schema.rb'
     - 'tmp/**/*'
     - 'vendor/**/*'
+  Include:
+    - '**/Rakefile'
+    - '**/config.ru'
   TargetRubyVersion: 2.3
 
 Metrics/LineLength:
