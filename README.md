@@ -14,7 +14,7 @@
 
     rake db:setup  # nukes dev db, creates it, loads seed data
 
-## Run tests and all checks
+## Run tests and code checks
 
     bin/checks  # run all checks
     bin/rspec   # rspec only
