@@ -1,15 +1,15 @@
 FactoryGirl.define do
-  BASE58_ALPHABET = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz'
-  SKILL = %w{UX Design Ruby Elixir Javascript Java Ethereum Bitcoin C++ IPFS webtorrent uPort} +
-      ["growth hacking", "training design", "project management", "product design",
-          "online marketing", "hardware hacking", "security reviews"]
+  BASE58_ALPHABET = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz'.freeze
+  SKILL = %w[UX Design Ruby Elixir Javascript Java Ethereum Bitcoin C++ IPFS webtorrent uPort] +
+          ['growth hacking', 'training design', 'project management', 'product design',
+           'online marketing', 'hardware hacking', 'security reviews']
 
   sequence :uport_address do |n|
-    PatternExpander.new('0x'+('[+w]'*40))[n]
+    PatternExpander.new('0x' + ('[+w]' * 40))[n]
   end
 
   sequence :ipfs_reputon_key do |n|
-    PatternExpander.new('Qm'+('[+w]'*44))[n]
+    PatternExpander.new('Qm' + ('[+w]' * 44))[n]
   end
 
   factory :user do
@@ -36,7 +36,6 @@ FactoryGirl.define do
     end
   end
 
-
   factory :skill do
     name { SKILL.sample }
 
@@ -46,20 +45,20 @@ FactoryGirl.define do
 
     project_count { count_seed }
 
-    ipfs_reputon_key #{ "Qm" + 44.times.map { 'z' }.join }
+    ipfs_reputon_key # { "Qm" + 44.times.map { 'z' }.join }
 
     trait :unconfirmed do
-      name "Elixir"
+      name 'Elixir'
       project_count 0
     end
 
     trait :confirmed do
-      name "Ruby on Rails"
+      name 'Ruby on Rails'
       project_count 5
       after(:create) do |skill|
         3.times do
           create :confirmation,
-              skill_id: skill.id
+            skill_id: skill.id
         end
       end
     end
@@ -78,16 +77,15 @@ FactoryGirl.define do
     end
 
     trait :random_confirmer do
-      confirmer_id { (User.all - [User.find_by_id(skill_claimant_id)]).sample.id }
+      confirmer_id { (User.all - [User.find_by(id: skill_claimant_id)]).sample.id }
     end
 
     trait :random_ipfs do
-      ipfs_reputon_key { "Qm" + 44.times.map { BASE58_ALPHABET.split('').sample }.join }
+      ipfs_reputon_key { 'Qm' + 44.times.map { BASE58_ALPHABET.split('').sample }.join }
     end
 
     trait :random_rating do
       rating { [0.5, 1].sample }
     end
   end
-
 end
