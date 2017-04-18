@@ -1,16 +1,25 @@
 # Work.nation
 
-## Development Environment Seed Data
-
-From the console
+## Set up
 
     bundle install
-    rake db:setup
 
-## To run tests
+## Start server
 
-    rspec
+    foreman start  # to start server + sidekiq
+    # or
+    rails server   # just server
+
+## Create seed data
+
+    rake db:setup  # nukes dev db, creates it, loads seed data
+
+## Run tests and all checks
+
+    bin/checks  # run all checks
+    bin/rspec   # rspec only
+    bin/rubocop # rubocop only
 
 ## CI
 
-https://circleci.com/gh/CoMakery/server.work.nation
+See https://circleci.com/gh/CoMakery/server.work.nation
