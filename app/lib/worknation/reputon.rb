@@ -58,7 +58,7 @@ module Worknation
 
     def self.handle_error(error)
       Rails.logger.error error.message.to_s.red
-      notify_airbrake error
+      Airbrake.notify error
     end
 
     def initialize(data, signer, ipfs_key)
