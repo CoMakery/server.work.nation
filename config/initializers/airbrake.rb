@@ -6,7 +6,7 @@ Airbrake.configure do |c|
   c.root_directory = Rails.root
   c.logger = Rails.logger
   c.environment = Rails.env
-  c.ignore_environments = %w[test]
+  c.ignore_environments = %w[test development]
 
   # A list of parameters that should be filtered out of what is sent to
   # Airbrake. By default, all "password" attributes will have their contents
