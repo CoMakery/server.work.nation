@@ -9,7 +9,7 @@ module Worknation
         name: 'Claim',
         abi: CONTRACT_ABI,
         address: '0x8cb4cb36e7cc72bb84f48daed7cb8071c3f55f8f',
-        client: client
+        client: client,
       )
 
       claim_count = contract.call.claim_count
@@ -84,7 +84,7 @@ module Worknation
       return if skill.present?
       log user.skills.create!(
         name: @data['assertion'],
-        ipfs_reputon_key: @ipfs_key
+        ipfs_reputon_key: @ipfs_key,
       )
     end
 
@@ -106,7 +106,7 @@ module Worknation
         skill: skill,
         claimant: skill.user,
         rating: @data['rating'],
-        ipfs_reputon_key: @ipfs_key
+        ipfs_reputon_key: @ipfs_key,
       )
     end
 

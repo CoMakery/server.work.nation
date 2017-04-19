@@ -25,7 +25,7 @@ RSpec.describe UsersController, type: :controller do
       specify do
         expect(json).to eq('uportAddress' => user.uport_address,
                            'name' => user.name,
-                           'skills' => [])
+                           'skills' => [],)
       end
     end
 
@@ -43,15 +43,15 @@ RSpec.describe UsersController, type: :controller do
                                'name' => 'Ruby on Rails',
                                'confirmationCount' => 3,
                                'projectCount' => 5,
-                               'ipfsReputonKey' => 'Qmaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab'
+                               'ipfsReputonKey' => 'Qmaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab',
                              },
                              {
                                'name' => 'Elixir',
                                'confirmationCount' => 0,
                                'projectCount' => 0,
-                               'ipfsReputonKey' => 'Qmaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaf'
-                             }
-                           ])
+                               'ipfsReputonKey' => 'Qmaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaf',
+                             },
+                           ],)
       end
     end
   end

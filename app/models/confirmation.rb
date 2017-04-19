@@ -9,13 +9,13 @@ class Confirmation < ApplicationRecord
 
   validates :skill_claimant_id,
     exclusion: { message: "can't self confirm",
-                 in: ->(x) { [x.confirmer_id] } }
+                 in: ->(x) { [x.confirmer_id] }, }
 
   def as_json(_options = {})
     {
       confirmer: user.uport_address,
       rating: rating,
-      ipfsReputonKey: ipfs_reputon_key
+      ipfsReputonKey: ipfs_reputon_key,
     }
   end
 end

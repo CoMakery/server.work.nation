@@ -17,7 +17,7 @@ class User < ApplicationRecord
     {
       name: name,
       uportAddress: uport_address,
-      skills: skills.map(&:as_json)
+      skills: skills.map(&:as_json),
     }
   end
 end
