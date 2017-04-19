@@ -7,6 +7,6 @@ else
   bin/rspec
 fi
 
-bin/rubocop
+bin/cop  # rubocop
 
 bundle exec brakeman --exit-on-warn --quiet > /dev/null
