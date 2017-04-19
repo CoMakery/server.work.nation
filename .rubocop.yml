@@ -15,6 +15,9 @@ AllCops:
     - '**/config.ru'
   TargetRubyVersion: 2.3
 
+Lint/EndAlignment:
+  EnforcedStyleAlignWith: variable
+
 Metrics/AbcSize:
   Exclude:
     - 'app/lib/worknation/reputon.rb'
@@ -43,6 +46,10 @@ Rails:
 
 RSpec/ExampleLength:
   Enabled: false
+
+Style/AccessorMethodName:
+  Exclude:
+    - 'app/lib/worknation/reputon.rb'
 
 Style/AlignParameters:
   Enabled: true

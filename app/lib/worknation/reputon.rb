@@ -18,7 +18,7 @@ module Worknation
       )
 
       claim_count = contract.call.claim_count
-      known_claim_count = Integer( REDIS.get('known_claim_count') || -1 )
+      known_claim_count = Integer(REDIS.get('known_claim_count') || -1)
       log "Max known claim in Ethereum: #{claim_count - 1}".green
       log "Max known claim in DB      : #{known_claim_count}".green
 
@@ -39,7 +39,7 @@ module Worknation
       log response.code
       if response.code != 200
         # raise WorkNation::ReputonNotFound.new(), "Error fetching #{ipfs_url.inspect}: #{response.code.inspect}\n#{response.body}"
-        raise ReputonNotFound.new("Error fetching #{ipfs_url} -- #{response.body} -- #{response.code}")
+        raise ReputonNotFound, "Error fetching #{ipfs_url} -- #{response.body} -- #{response.code}"
       end
 
       reputons_envelope = JSON.parse(response.body)
@@ -47,7 +47,7 @@ module Worknation
       application = reputons_envelope['application']
       if application != 'skills'
         # raise ReputonInvalid.new("Expected application 'skills' but was: #{reputons_envelope['application']}"), Reputons: reputons_envelope
-        raise ReputonInvalid.new("Expected application 'skills' but was: #{reputons_envelope['application']}.\nReputons:\n#{JSON.pretty_unparse(reputons_envelope)}")
+        raise ReputonInvalid, "Expected application 'skills' but was: #{reputons_envelope['application']}.\nReputons:\n#{JSON.pretty_unparse(reputons_envelope)}"
       end
 
       reputons_data = reputons_envelope['reputons']
