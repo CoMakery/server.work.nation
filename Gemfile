@@ -22,6 +22,7 @@ gem 'rack-cors' # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS
 gem 'rails', '5.1.0.rc1'
 gem 'sidekiq'
 gem 'sidekiq-failures'
+gem 'sidekiq-scheduler'
 
 group :development, :test do
   gem 'dotenv-rails'
