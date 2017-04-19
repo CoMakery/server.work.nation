@@ -1,6 +1,6 @@
 ---
   :verbose: true
-  :concurrency: 3
+  :concurrency: 1
   :schedule:
     get_reputons:
       every: 15s
