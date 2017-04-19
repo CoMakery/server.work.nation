@@ -45,8 +45,8 @@ module Worknation
       log reputons_envelope
       application = reputons_envelope['application']
       if application != 'skills'
-        raise ReputonInvalid.new("Expected application 'skills' but was: #{reputons_envelope['application']}"), Reputons: reputons_envelope
-        # errors ReputonInvalid.new("Expected application 'skills' but was: #{reputon['application']}.\nReputons:\n#{JSON.pretty_unparse(reputons_envelope)}")
+        # raise ReputonInvalid.new("Expected application 'skills' but was: #{reputons_envelope['application']}"), Reputons: reputons_envelope
+        raise ReputonInvalid.new("Expected application 'skills' but was: #{reputons_envelope['application']}.\nReputons:\n#{JSON.pretty_unparse(reputons_envelope)}")
       end
 
       reputons_data = reputons_envelope['reputons']
@@ -72,7 +72,7 @@ module Worknation
 
     def self.handle_error(error, params = {})
       Rails.logger.error error.message.to_s.red
-      Airbrake.notify error, params.presence
+      Airbrake.notify error, params
     end
 
     def initialize(data, signer, ipfs_key)
