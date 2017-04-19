@@ -7,7 +7,7 @@ Rails.application.routes.draw do
 
   unless Rails.env.development? || Rails.env.test?
     Sidekiq::Web.use Rack::Auth::Basic, 'Sidekiq' do |_username, password|
-      raise unless ENV['SIDEKIQ_PASSWORD'].length >= 8
+      raise "Password must be at least 8 characters long" unless ENV['SIDEKIQ_PASSWORD']&.length >= 8
       Rack::Utils.secure_compare(ENV['SIDEKIQ_PASSWORD'], password)
     end
   end
