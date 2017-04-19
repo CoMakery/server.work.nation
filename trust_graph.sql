@@ -1,28 +1,29 @@
-WITH RECURSIVE search_graph(confirmer_id, skill_claimant_id, depth, path, cycle) AS (
+WITH RECURSIVE trust_graph(confirmer_id, skill_claimant_id, depth, path, confirmations_in_graph) AS (
   SELECT
-    g.confirmer_id,
-    g.skill_claimant_id,
-    1 as depth,
-    ARRAY [g.confirmer_id, g.skill_claimant_id] as path,
-    FALSE as cycle
-  FROM confirmations g
-  WHERE confirmer_id = 1
+    conf1.confirmer_id,
+    conf1.skill_claimant_id,
+    1                                                   AS depth,
+    ARRAY [conf1.confirmer_id, conf1.skill_claimant_id] AS path,
+    ARRAY [conf1.id] AS confirmations_in_graph
+  FROM confirmations conf1
+  WHERE confirmer_id = 2
   UNION
   SELECT
-    g.confirmer_id,
-    g.skill_claimant_id,
-    sg.depth + 1,
-    path || g.skill_claimant_id,
-    g.confirmer_id = ANY (path)
-  FROM confirmations g, search_graph sg
-  WHERE g.confirmer_id = sg.skill_claimant_id
-  AND NOT cycle
+    conf2.confirmer_id,
+    conf2.skill_claimant_id,
+    previous_results.depth + 1,
+    previous_results.path || conf2.skill_claimant_id,
+    previous_results.confirmations_in_graph || conf2.id
+  FROM confirmations conf2, trust_graph previous_results
+  WHERE conf2.confirmer_id = previous_results.skill_claimant_id
+        AND depth < 3
+        AND NOT conf2.skill_claimant_id = ANY (path)
+        AND NOT conf2.id = ANY (previous_results.confirmations_in_graph)
+        AND NOT (previous_results.path || conf2.skill_claimant_id) = previous_results.path
 )
-SELECT DISTINCT
-  path,
+SELECT DISTINCT path,
   skill_claimant_id,
   confirmer_id,
   depth
-FROM search_graph
-WHERE depth <= 4
+FROM trust_graph
 ORDER BY PATH;
