@@ -20,7 +20,7 @@ module Worknation
       claim_count = contract.call.claim_count
       known_claim_count = Integer(REDIS.get('known_claim_count') || -1)
       log "Max known claim in Ethereum: #{claim_count - 1}".green
-      log "Max known claim in DB      : #{known_claim_count}".green
+      log "Max known claim in local db: #{known_claim_count}".green
 
       (known_claim_count + 1...claim_count).each do |claim_index|
         get_claim(claim_index, contract)
