@@ -7,7 +7,7 @@ RSpec.describe UsersController, type: :routing do
     end
 
     it 'routes to #show' do
-      expect(get: '/users/1').to route_to('users#show', id: '1')
+      expect(get: '/users/1').to route_to('users#show', uport_address: '1')
     end
   end
 end

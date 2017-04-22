@@ -5,16 +5,26 @@ FactoryGirl.define do
            'online marketing', 'hardware hacking', 'security reviews',]
 
   sequence :uport_address do |n|
-    PatternExpander.new('0x' + ('[+w]' * 40))[n]
+    PatternExpander.new('0x' + ('[+h]' * 40))[n]
   end
 
   sequence :ipfs_reputon_key do |n|
-    PatternExpander.new('Qm' + ('[+w]' * 44))[n]
+    PatternExpander.new('QmREPUTON' + ('[+w]' * 37))[n]
+  end
+
+  sequence :avatar_image_ipfs_key do |n|
+    PatternExpander.new('QmAVATAR' + ('[+w]' * 38))[n]
+  end
+
+  sequence :banner_image_ipfs_key do |n|
+    PatternExpander.new('QmBANNER' + ('[+w]' * 38))[n]
   end
 
   factory :user do
     name { Faker::Name.name }
     uport_address
+    avatar_image_ipfs_key
+    banner_image_ipfs_key
 
     trait :random_skills do
       after(:create) do |user|

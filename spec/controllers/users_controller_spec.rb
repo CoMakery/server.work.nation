@@ -20,11 +20,13 @@ RSpec.describe UsersController, type: :controller do
 
       let(:json) { JSON.parse(response.body) }
 
-      before { get :show, params: { id: user.to_param }, session: valid_session }
+      before { get :show, params: { uport_address: user.to_param }, session: valid_session }
 
       specify do
         expect(json).to eq('uportAddress' => user.uport_address,
                            'name' => user.name,
+                           'avatar_image_ipfs_key' => 'QmAVATARaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaad',
+                           'banner_image_ipfs_key' => 'QmBANNERaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaad',
                            'skills' => [],)
       end
     end
@@ -33,23 +35,25 @@ RSpec.describe UsersController, type: :controller do
       let!(:user) { create :user, :with_skills }
       let(:data) { JSON.parse(response.body) }
 
-      before { get :show, params: { id: user.to_param }, session: valid_session }
+      before { get :show, params: { uport_address: user.to_param }, session: valid_session }
 
       specify do
         expect(data).to eq('name' => user.name,
+                           'avatar_image_ipfs_key' => 'QmAVATARaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaae',
+                           'banner_image_ipfs_key' => 'QmBANNERaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaae',
                            'uportAddress' => user.uport_address,
                            'skills' => [
                              {
                                'name' => 'Ruby on Rails',
                                'confirmationCount' => 3,
                                'projectCount' => 5,
-                               'ipfsReputonKey' => 'Qmaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab',
+                               'ipfsReputonKey' => 'QmREPUTONaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab',
                              },
                              {
                                'name' => 'Elixir',
                                'confirmationCount' => 0,
                                'projectCount' => 0,
-                               'ipfsReputonKey' => 'Qmaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaf',
+                               'ipfsReputonKey' => 'QmREPUTONaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaf',
                              },
                            ],)
       end

@@ -20,21 +20,21 @@ Lint/EndAlignment:
 
 Metrics/AbcSize:
   Exclude:
-    - 'app/lib/worknation/reputon.rb'
+    - 'app/lib/decentral/*.rb'
 
 Metrics/BlockLength:
   Enabled: false
 
 Metrics/ClassLength:
   Exclude:
-    - 'app/lib/worknation/reputon.rb'
+    - 'app/lib/decentral/*.rb'
 
 Metrics/LineLength:
   Enabled: false
 
 Metrics/MethodLength:
   Exclude:
-    - 'app/lib/worknation/reputon.rb'
+    - 'app/lib/decentral/*.rb'
 
 Performance/TimesMap:
   Exclude:
@@ -49,7 +49,7 @@ RSpec/ExampleLength:
 
 Style/AccessorMethodName:
   Exclude:
-    - 'app/lib/worknation/reputon.rb'
+    - 'app/lib/decentral/*.rb'
 
 Style/AlignParameters:
   Enabled: true

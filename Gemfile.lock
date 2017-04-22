@@ -1,11 +1,25 @@
 GIT
+  remote: https://github.com/CoMakery/base58.git
+  revision: 546c86193002d1e0beed8335044649845f6650dc
+  ref: 546c86193002d1e0beed8335044649845f6650dc
+  specs:
+    base58 (0.1.0)
+
+GIT
   remote: https://github.com/CoMakery/ethereum.rb.git
-  revision: a42217116cd2c8404c5996dafea3741f49bdb803
+  revision: 1dd9af4e18ba0ca891f87b4f20e3c6454645b204
   ref: dev
   specs:
     ethereum.rb (2.1.0)
       activesupport (~> 5.0)
       digest-sha3 (~> 1.1)
+
+GIT
+  remote: https://github.com/harlantwood/pattern_expander.git
+  revision: 106928549856237c9bc5f41e85d40ab42a9f5806
+  ref: hex
+  specs:
+    pattern_expander (0.0.2)
 
 GEM
   remote: https://rubygems.org/
@@ -110,7 +124,6 @@ GEM
       mini_portile2 (~> 2.1.0)
     parser (2.4.0.0)
       ast (~> 2.2)
-    pattern_expander (0.0.2)
     pg (0.20.0)
     pivotal_git_scripts (1.4.0)
     powerpack (0.1.1)
@@ -247,6 +260,7 @@ PLATFORMS
 DEPENDENCIES
   airbrake
   awesome_print
+  base58!
   brakeman
   colorize
   dotenv-rails
@@ -257,7 +271,7 @@ DEPENDENCIES
   foreman
   httparty
   listen
-  pattern_expander
+  pattern_expander!
   pg
   pivotal_git_scripts
   pry-byebug

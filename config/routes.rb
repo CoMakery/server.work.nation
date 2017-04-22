@@ -2,7 +2,7 @@ require 'sidekiq/web'
 
 Rails.application.routes.draw do
   root 'users#index'
-  resources :users, only: %i[index show]
+  resources :users, only: %i[index show], param: :uport_address
   resources :projects
 
   unless Rails.env.development? || Rails.env.test?

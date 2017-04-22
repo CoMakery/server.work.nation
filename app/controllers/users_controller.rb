@@ -1,6 +1,4 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show]
-
   # GET /users
   def index
     @users = User.all.includes(:skills)
@@ -8,20 +6,10 @@ class UsersController < ApplicationController
     render json: @users
   end
 
-  # GET /users/1
+  # GET /users/0x01d3b5eaa2e305a1553f0e2612353c94e597449e (uPort address)
   def show
+    @user = User.find_or_create_by!(uport_address: params[:uport_address])
     render json: @user
+    UpdateProfile.perform_async @user.to_param # update profile info from uPort async
   end
-
-  private
-
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
-    end
-
-    # Only allow a trusted parameter "white list" through.
-    def user_params
-      params.require(:user).permit(:uport_address, :name)
-    end
 end
