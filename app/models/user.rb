@@ -8,13 +8,13 @@ class User < ApplicationRecord
     uport_address
   end
 
-  def as_json(_options = {})
+  def as_json(options = {})
     {
       name: name,
       uportAddress: uport_address,
       avatar_image_ipfs_key: avatar_image_ipfs_key,
       banner_image_ipfs_key: banner_image_ipfs_key,
-      skills: skills.map(&:as_json),
+      skills: skills.map { |skill| skill.as_json(options) },
     }
   end
 

@@ -11,9 +11,12 @@ class Confirmation < ApplicationRecord
     exclusion: { message: "can't self confirm",
                  in: ->(x) { [x.confirmer_id] }, }
 
+  # TODO: validate: given user cannot confirm same claim twice
+
   def as_json(_options = {})
     {
-      confirmer: user.uport_address,
+      confirmerUportAddress: user.uport_address,
+      confirmerName: user.name,
       rating: rating,
       ipfsReputonKey: ipfs_reputon_key,
     }

@@ -20,6 +20,10 @@ FactoryGirl.define do
     PatternExpander.new('QmBANNER' + ('[+w]' * 38))[n]
   end
 
+  sequence :joes do |n|
+    PatternExpander.new('Joe #[+d]')[n]
+  end
+
   factory :user do
     name { Faker::Name.name }
     uport_address
@@ -32,6 +36,10 @@ FactoryGirl.define do
           create(:skill, user: user, name: skill_name)
         end
       end
+    end
+
+    trait :joe do
+      name { generate(:joes) }
     end
 
     trait :random_address do
@@ -78,7 +86,7 @@ FactoryGirl.define do
     rating { 1 }
     ipfs_reputon_key # { "Qm" + 44.times.map { 'z' }.join }
 
-    confirmer_id { create(:user).id }
+    confirmer_id { create(:user, :joe).id }
     skill_claimant_id { Skill.find(skill_id).skill_claimant_id }
 
     trait :random_skill do
