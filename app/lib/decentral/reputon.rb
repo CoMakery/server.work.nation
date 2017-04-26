@@ -1,3 +1,5 @@
+require_relative 'errors'
+
 module Decentral
   class Reputon
     CONTRACT_ABI = JSON.parse %([{"constant":false,"inputs":[{"name":"claim","type":"string"}],"name":"getSigner","outputs":[{"name":"_signer","type":"address"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_claim","type":"string"}],"name":"put","outputs":[{"name":"_success","type":"bool"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"index","type":"uint256"}],"name":"getClaim","outputs":[{"name":"_claim","type":"string"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"claimCount","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"claims","outputs":[{"name":"","type":"string"}],"payable":false,"type":"function"},{"payable":false,"type":"fallback"}])
@@ -134,17 +136,5 @@ module Decentral
     def log(msg)
       self.class.log(msg)
     end
-  end
-
-  class ReputonError < StandardError
-  end
-
-  class ReputonNotFound < ReputonError
-  end
-
-  class ReputonInvalid < ReputonError
-  end
-
-  class ReputonSignatureInvalid < ReputonError
   end
 end

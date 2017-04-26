@@ -1,3 +1,5 @@
+require_relative 'errors'
+
 module Decentral
   class Uport
     LEGACY_REGISTRY_CONTRACT_ABI = JSON.parse %([{"constant":true,"inputs":[{"name":"personaAddress","type":"address"}],"name":"getAttributes","outputs":[{"name":"","type":"bytes"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"version","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"previousPublishedVersion","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"ipfsHash","type":"bytes"}],"name":"setAttributes","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"ipfsAttributeLookup","outputs":[{"name":"","type":"bytes"}],"payable":false,"type":"function"},{"inputs":[{"name":"_previousPublishedVersion","type":"address"}],"payable":false,"type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_sender","type":"address"},{"indexed":false,"name":"_timestamp","type":"uint256"}],"name":"AttributesSet","type":"event"}])
@@ -30,7 +32,7 @@ module Decentral
       response = HTTParty.get(ipfs_url)
       log response.code
       if response.code != 200
-        raise "Error fetching #{ipfs_url} -- #{response.body} -- #{response.code}"
+        raise Decentral::NotFound "Error fetching #{ipfs_url} -- #{response.body} -- #{response.code}"
       end
 
       profile = JSON.parse(response.body)
