@@ -6,7 +6,7 @@ ruby '2.3.1'
 #   "https://github.com/#{repo_name}.git"
 # end
 
-gem 'airbrake'
+# gem 'airbrake'
 gem 'awesome_print'
 gem 'base58', git: 'https://github.com/CoMakery/base58.git', ref: '546c86193002d1e0beed8335044649845f6650dc'
 gem 'colorize'
@@ -22,6 +22,7 @@ gem 'pg'
 gem 'puma'
 gem 'rack-cors' # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem 'rails', '5.1.0.rc2'
+gem 'sentry-raven'
 gem 'sidekiq'
 gem 'sidekiq-failures'
 gem 'sidekiq-scheduler'
