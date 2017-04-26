@@ -2,7 +2,7 @@ FactoryGirl.define do
   BASE58_ALPHABET = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz'.freeze
   SKILL = %w[UX Design Ruby Elixir Javascript Java Ethereum Bitcoin C++ IPFS webtorrent uPort] +
           ['growth hacking', 'training design', 'project management', 'product design',
-           'online marketing', 'hardware hacking', 'security reviews',]
+           'online marketing', 'hardware hacking', 'security reviews']
 
   sequence :uport_address do |n|
     PatternExpander.new('0x' + ('[+h]' * 40))[n]

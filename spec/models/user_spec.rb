@@ -10,6 +10,6 @@ RSpec.describe User, type: :model do
                                                skills
                                                avatar_image_ipfs_key
                                                banner_image_ipfs_key
-                                             ],)
+                                             ])
   end
 end

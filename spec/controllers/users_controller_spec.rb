@@ -23,11 +23,13 @@ RSpec.describe UsersController, type: :controller do
       before { get :show, params: { uport_address: user.to_param }, session: valid_session }
 
       specify do
-        expect(json).to eq('uportAddress' => user.uport_address,
-                           'name' => user.name,
-                           'avatar_image_ipfs_key' => 'QmAVATARaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaad',
-                           'banner_image_ipfs_key' => 'QmBANNERaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaad',
-                           'skills' => [],)
+        expect(json).to eq(
+          'uportAddress' => user.uport_address,
+          'name' => user.name,
+          'avatar_image_ipfs_key' => 'QmAVATARaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaad',
+          'banner_image_ipfs_key' => 'QmBANNERaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaad',
+          'skills' => [],
+        )
       end
     end
 
@@ -38,45 +40,47 @@ RSpec.describe UsersController, type: :controller do
       before { get :show, params: { uport_address: user.to_param }, session: valid_session }
 
       specify do
-        expect(data).to eq('name' => user.name,
-                           'avatar_image_ipfs_key' => 'QmAVATARaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaae',
-                           'banner_image_ipfs_key' => 'QmBANNERaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaae',
-                           'uportAddress' => user.uport_address,
-                           'skills' => [
-                             {
-                               'name' => 'Ruby on Rails',
-                               'confirmationCount' => 3,
-                               'projectCount' => 5,
-                               'ipfsReputonKey' => 'QmREPUTONaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab',
-                               'confirmations' => [
-                                 {
-                                   'confirmerUportAddress' => '0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaf',
-                                   'confirmerName' => 'Joe #2',
-                                   'rating' => 1.0,
-                                   'ipfsReputonKey' => 'QmREPUTONaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaac',
-                                 },
-                                 {
-                                   'confirmerUportAddress' => '0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa0',
-                                   'confirmerName' => 'Joe #3',
-                                   'rating' => 1.0,
-                                   'ipfsReputonKey' => 'QmREPUTONaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaad',
-                                 },
-                                 {
-                                   'confirmerUportAddress' => '0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa1',
-                                   'confirmerName' => 'Joe #4',
-                                   'rating' => 1.0,
-                                   'ipfsReputonKey' => 'QmREPUTONaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaae',
-                                 },
-                               ],
-                             },
-                             {
-                               'name' => 'Elixir',
-                               'confirmationCount' => 0,
-                               'projectCount' => 0,
-                               'ipfsReputonKey' => 'QmREPUTONaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaf',
-                               'confirmations' => [],
-                             },
-                           ],)
+        expect(data).to eq(
+          'name' => user.name,
+          'avatar_image_ipfs_key' => 'QmAVATARaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaae',
+          'banner_image_ipfs_key' => 'QmBANNERaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaae',
+          'uportAddress' => user.uport_address,
+          'skills' => [
+            {
+              'name' => 'Ruby on Rails',
+              'confirmationCount' => 3,
+              'projectCount' => 5,
+              'ipfsReputonKey' => 'QmREPUTONaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab',
+              'confirmations' => [
+                {
+                  'confirmerUportAddress' => '0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaf',
+                  'confirmerName' => 'Joe #2',
+                  'rating' => 1.0,
+                  'ipfsReputonKey' => 'QmREPUTONaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaac',
+                },
+                {
+                  'confirmerUportAddress' => '0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa0',
+                  'confirmerName' => 'Joe #3',
+                  'rating' => 1.0,
+                  'ipfsReputonKey' => 'QmREPUTONaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaad',
+                },
+                {
+                  'confirmerUportAddress' => '0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa1',
+                  'confirmerName' => 'Joe #4',
+                  'rating' => 1.0,
+                  'ipfsReputonKey' => 'QmREPUTONaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaae',
+                },
+              ],
+            },
+            {
+              'name' => 'Elixir',
+              'confirmationCount' => 0,
+              'projectCount' => 0,
+              'ipfsReputonKey' => 'QmREPUTONaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaf',
+              'confirmations' => [],
+            },
+          ],
+        )
       end
     end
   end

@@ -9,7 +9,7 @@ class Confirmation < ApplicationRecord
 
   validates :skill_claimant_id,
     exclusion: { message: "can't self confirm",
-                 in: ->(x) { [x.confirmer_id] }, }
+                 in: ->(x) { [x.confirmer_id] } }
 
   # TODO: validate: given user cannot confirm same claim twice
 
