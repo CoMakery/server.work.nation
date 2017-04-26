@@ -72,8 +72,10 @@ module Decentral
     end
 
     def self.handle_error(error, params = {})
+      params.reverse_merge! level: 'info'
       Rails.logger.error error.message.to_s.red
-      Airbrake.notify error, params
+      # Airbrake.notify error, params
+      Raven.capture_exception error, params
     end
 
     def initialize(data, signer, ipfs_key)
