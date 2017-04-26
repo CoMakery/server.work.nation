@@ -1,7 +1,7 @@
 require_relative 'errors'
 
 module Decentral
-  class Reputon
+  class Claim
     CONTRACT_ABI = JSON.parse %([{"constant":false,"inputs":[{"name":"claim","type":"string"}],"name":"getSigner","outputs":[{"name":"_signer","type":"address"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_claim","type":"string"}],"name":"put","outputs":[{"name":"_success","type":"bool"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"index","type":"uint256"}],"name":"getClaim","outputs":[{"name":"_claim","type":"string"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"claimCount","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"claims","outputs":[{"name":"","type":"string"}],"payable":false,"type":"function"},{"payable":false,"type":"fallback"}])
     REDIS = if ENV['REDISTOGO_URL']
       Redis.new(url: URI.parse(ENV['REDISTOGO_URL']))
@@ -9,7 +9,7 @@ module Decentral
       Redis.new
     end
 
-    def self.get_latest_reputons
+    def self.get_latest_claims
       client = Ethereum::HttpClient.new(ENV['ETHEREUM_RPC_URL'])
 
       contract = Ethereum::Contract.create(
@@ -40,22 +40,20 @@ module Decentral
       # puts response.body, response.code #, response.message, response.headers.inspect
       log response.code
       if response.code != 200
-        # raise WorkNation::ReputonNotFound.new(), "Error fetching #{ipfs_url.inspect}: #{response.code.inspect}\n#{response.body}"
-        raise ReputonNotFound, "Error fetching #{ipfs_url} -- #{response.body} -- #{response.code}"
+        raise NotFound, "Error fetching #{ipfs_url} -- #{response.body} -- #{response.code}"
       end
 
       reputons_envelope = JSON.parse(response.body)
       log reputons_envelope
       application = reputons_envelope['application']
       if application != 'skills'
-        # raise ReputonInvalid.new("Expected application 'skills' but was: #{reputons_envelope['application']}"), Reputons: reputons_envelope
         raise ReputonInvalid, "Expected application 'skills' but was: #{reputons_envelope['application']}.\nReputons:\n#{JSON.pretty_unparse(reputons_envelope)}"
       end
 
       reputons_data = reputons_envelope['reputons']
       reputons_data.each do |reputon_data|
         begin
-          reputon = Reputon.new(reputon_data, signer, ipfs_key)
+          reputon = Claim.new(reputon_data, signer, ipfs_key)
           reputon.save!
         rescue ReputonError => e
           handle_error e

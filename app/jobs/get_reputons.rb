@@ -4,6 +4,6 @@ class GetReputons
   include Sidekiq::Worker
 
   def perform
-    Decentral::Reputon.get_latest_reputons
+    Decentral::Claim.get_latest_claims
   end
 end

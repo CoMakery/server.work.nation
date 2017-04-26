@@ -8,9 +8,6 @@ module Decentral
   class ReputonError < DecentralError
   end
 
-  class ReputonNotFound < ReputonError
-  end
-
   class ReputonInvalid < ReputonError
   end
 
