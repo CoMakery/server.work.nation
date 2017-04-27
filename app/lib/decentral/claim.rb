@@ -75,8 +75,15 @@ module Decentral
     end
 
     def self.save_project(params)
-      Project.create! params.except(:type).deep_transform_keys!(&:underscore)
-
+      orig_params = params.dup
+      skill_list = params.delete('skills')
+      params.delete('type')
+      params.deep_transform_keys!(&:underscore)
+      project = Project.new params
+      project.skill_list = skill_list
+      project.save!
+    rescue
+      raise InvalidFormat, "Project saving failed from params: #{params.inspect} ( original params: #{orig_params.inspect} )"
       # {
       #     address: "",
       #     contact: "",
