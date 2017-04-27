@@ -2,7 +2,7 @@ module Decentral
   class Claim
     extend Decentral::Log
 
-    CLAIM_CONTRACT_ADDRESS = '0x3f79a56038c339bc87853ca17026c3eddf9cfa9b'
+    CLAIM_CONTRACT_ADDRESS = '0x3f79a56038c339bc87853ca17026c3eddf9cfa9b'.freeze
     CLAIM_CONTRACT_ABI = JSON.parse %([{"constant":false,"inputs":[{"name":"claim","type":"string"}],"name":"getSigner","outputs":[{"name":"_signer","type":"address"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_claim1","type":"string"},{"name":"_claim2","type":"string"}],"name":"put","outputs":[{"name":"_success","type":"bool"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_claim","type":"string"}],"name":"put","outputs":[{"name":"_success","type":"bool"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"index","type":"uint256"}],"name":"getClaim","outputs":[{"name":"_claim","type":"string"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"claimCount","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"claims","outputs":[{"name":"","type":"string"}],"payable":false,"type":"function"},{"constant":false,"inputs":[],"name":"whoami","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function"},{"payable":false,"type":"fallback"}])
     REDIS = if ENV['REDISTOGO_URL']
       Redis.new(url: URI.parse(ENV['REDISTOGO_URL']))
@@ -19,10 +19,10 @@ module Decentral
       client = Ethereum::HttpClient.new(ENV['ETHEREUM_RPC_URL'])
 
       contract = Ethereum::Contract.create(
-          name: 'Claim',
-          address: CLAIM_CONTRACT_ADDRESS,
-          abi: CLAIM_CONTRACT_ABI,
-          client: client,
+        name: 'Claim',
+        address: CLAIM_CONTRACT_ADDRESS,
+        abi: CLAIM_CONTRACT_ABI,
+        client: client,
       )
 
       claim_count = contract.call.claim_count
@@ -56,16 +56,15 @@ module Decentral
         raise Decentral::InvalidFormatError, "Expected JSON from #{ipfs_url}, but got: [[ #{content[0...1000]} ]]"
       end
 
-      if data.keys.sort == %w[ application reputons ]
+      if data.keys.sort == %w[application reputons]
         save_reputon(data)
-      elsif data['type'] == "project"
+      elsif data['type'] == 'project'
         save_project(data)
-      elsif data['type'] == "permanode"
-        log_info "permanode:", data
+      elsif data['type'] == 'permanode'
+        log_info 'permanode:', data
       else
         raise Decentral::InvalidFormat, "Could not determine claim type; content: [[ #{content[0...1000]} ]]"
       end
-
 
       log "SETTING known_claim_count: #{claim_index}".green
       REDIS.set('known_claim_count', claim_index)
@@ -133,11 +132,11 @@ module Decentral
 
     def save_skill!
       user = User.find_or_create_by(uport_address: @data['rater'])
-      skill = user.skills.find_by(ipfs_reputon_key: @ipfs_key)
-      return if skill.present?
-      log user.skills.create!(
-          name: @data['assertion'],
-          ipfs_reputon_key: @ipfs_key,
+      skill_claim = user.skill_claims.find_by(ipfs_reputon_key: @ipfs_key)
+      return if skill_claim.present?
+      log user.skill_claims.create!(
+        name: @data['assertion'],
+        ipfs_reputon_key: @ipfs_key,
       )
     end
 
@@ -145,21 +144,21 @@ module Decentral
       # TODO: reject conf if normal rating not 0.5
 
       confirmer = User.find_or_create_by(uport_address: @data['rater'])
-      skill = Skill.find_by(ipfs_reputon_key: @data['rated'])
-      if skill.blank?
-        raise ReputonInvalid, "No skill found for [#{@data['rated']}].\nFull reputon:\n#{JSON.pretty_unparse(@data)}"
+      skill_claim = SkillClaim.find_by(ipfs_reputon_key: @data['rated'])
+      if skill_claim.blank?
+        raise ReputonInvalid, "No skill_claim found for [#{@data['rated']}].\nFull reputon:\n#{JSON.pretty_unparse(@data)}"
       end
-      if address(confirmer.uport_address) == address(skill.user.uport_address)
+      if address(confirmer.uport_address) == address(skill_claim.user.uport_address)
         raise ReputonInvalid, "Attempting to self confirm, rejected.\nFull reputon:\n#{JSON.pretty_unparse(@data)}"
       end
       confirmation = Confirmation.find_by(ipfs_reputon_key: @ipfs_key)
       return if confirmation.present?
       log confirmer.confirmations.create!(
-          user: confirmer,
-          skill: skill,
-          claimant: skill.user,
-          rating: @data['rating'],
-          ipfs_reputon_key: @ipfs_key,
+        user: confirmer,
+        skill_claim: skill_claim,
+        claimant: skill_claim.user,
+        rating: @data['rating'],
+        ipfs_reputon_key: @ipfs_key,
       )
     end
 
@@ -168,26 +167,25 @@ module Decentral
     end
   end
 
-  class DecentralError < StandardError;
+  class DecentralError < StandardError
   end
 
   # DecentralError:
 
-  class NotFound < DecentralError;
+  class NotFound < DecentralError
   end
 
-  class InvalidFormat < DecentralError;
+  class InvalidFormat < DecentralError
   end
 
-  class ReputonError < DecentralError;
+  class ReputonError < DecentralError
   end
 
   # ReputonError:
 
-  class ReputonInvalid < ReputonError;
+  class ReputonInvalid < ReputonError
   end
 
-  class ReputonSignatureInvalid < ReputonError;
+  class ReputonSignatureInvalid < ReputonError
   end
-
 end

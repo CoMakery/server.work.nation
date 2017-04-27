@@ -10,14 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170427000959) do
+ActiveRecord::Schema.define(version: 20170427004420) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "confirmations", force: :cascade do |t|
     t.integer "confirmer_id"
-    t.integer "skill_id"
+    t.integer "skill_claim_id"
     t.integer "skill_claimant_id"
     t.float "rating"
     t.text "ipfs_reputon_key"
@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 20170427000959) do
     t.text "permanode_id"
   end
 
-  create_table "skills", force: :cascade do |t|
+  create_table "skill_claims", force: :cascade do |t|
     t.integer "skill_claimant_id"
     t.text "name"
     t.integer "project_count", default: 0

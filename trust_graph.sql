@@ -2,7 +2,7 @@ WITH RECURSIVE trust_graph(confirmer_id, skill_claimant_id, skill_id, depth, pat
   SELECT
     conf1.confirmer_id,
     conf1.skill_claimant_id,
-    conf1.skill_id,
+    conf1.skill_claim_id,
     1                                                   AS depth,
     ARRAY [conf1.confirmer_id, conf1.skill_claimant_id] AS path,
     ARRAY [conf1.id] AS confirmations_in_graph
@@ -12,7 +12,7 @@ WITH RECURSIVE trust_graph(confirmer_id, skill_claimant_id, skill_id, depth, pat
   SELECT
     conf2.confirmer_id,
     conf2.skill_claimant_id,
-    conf2.skill_id,
+    conf2.skill_claim_id,
     previous_results.depth + 1,
     previous_results.path || conf2.skill_claimant_id,
     previous_results.confirmations_in_graph || conf2.id
@@ -25,7 +25,7 @@ WITH RECURSIVE trust_graph(confirmer_id, skill_claimant_id, skill_id, depth, pat
 )
 SELECT DISTINCT skill_claimant_id
 FROM trust_graph
-WHERE skill_id = 1;
+WHERE skill_claim_id = 1;
 
 -- SELECT DISTINCT path,
 --   skill_claimant_id,

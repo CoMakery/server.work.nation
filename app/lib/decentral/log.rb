@@ -15,7 +15,11 @@ module Decentral
     def log_colorful(color, *args)
       args.each do |arg|
         if arg.is_a?(Array) || arg.is_a?(Hash)
-          arg = JSON.pretty_generate(arg) rescue arg
+          arg = begin
+                  JSON.pretty_generate(arg)
+                rescue
+                  arg
+                end
         end
         output = if color
           arg.to_s.public_send color
@@ -25,7 +29,6 @@ module Decentral
         Rails.logger.info output
       end
     end
-
   end
 end
 

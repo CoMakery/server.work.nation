@@ -28,13 +28,13 @@ RSpec.describe UsersController, type: :controller do
           'name' => user.name,
           'avatar_image_ipfs_key' => 'QmAVATARaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaad',
           'banner_image_ipfs_key' => 'QmBANNERaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaad',
-          'skills' => [],
+          'skill_claims' => [],
         )
       end
     end
 
     describe 'for user with skills' do
-      let!(:user) { create :user, :joe, :with_skills }
+      let!(:user) { create :user, :joe, :with_skill_claims }
       let(:data) { JSON.parse(response.body) }
 
       before { get :show, params: { uport_address: user.to_param }, session: valid_session }
@@ -45,7 +45,7 @@ RSpec.describe UsersController, type: :controller do
           'avatar_image_ipfs_key' => 'QmAVATARaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaae',
           'banner_image_ipfs_key' => 'QmBANNERaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaae',
           'uportAddress' => user.uport_address,
-          'skills' => [
+          'skill_claims' => [
             {
               'name' => 'Ruby on Rails',
               'confirmationCount' => 3,

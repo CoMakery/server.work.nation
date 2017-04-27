@@ -7,7 +7,7 @@ RSpec.describe User, type: :model do
     expect(user.as_json.keys).to match_array(%i[
                                                name
                                                uportAddress
-                                               skills
+                                               skill_claims
                                                avatar_image_ipfs_key
                                                banner_image_ipfs_key
                                              ])
