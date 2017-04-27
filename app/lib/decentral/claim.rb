@@ -52,7 +52,7 @@ module Decentral
       begin
         content = response.body
         data = JSON.parse(content)
-      rescue JSON::ParserError => error
+      rescue JSON::ParserError
         raise Decentral::InvalidFormatError, "Expected JSON from #{ipfs_url}, but got: [[ #{content[0...1000]} ]]"
       end
 
