@@ -18,6 +18,7 @@ class FoundationSchema < ActiveRecord::Migration[5.1]
       t.text 'contact'
       t.text 'image_url'
       t.text 'permanode_id'
+      t.text 'permanode_creator_uport_address'
     end
 
     create_table 'skill_claims', force: :cascade do |t|

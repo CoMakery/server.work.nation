@@ -46,7 +46,7 @@ module Decentral
       # puts response.body, response.code #, response.message, response.headers.inspect
       log response.code
       if response.code != 200
-        raise NotFound, "Error fetching #{ipfs_url} -- #{response.body} -- #{response.code}"
+        raise Decentral::NotFound, "Error fetching #{ipfs_url} -- #{response.body} -- #{response.code}"
       end
 
       begin
@@ -57,7 +57,7 @@ module Decentral
       end
 
       if data.keys.sort == %w[application reputons]
-        save_reputon(data)
+        save_reputon(data, signer, ipfs_key)
       elsif data['type'] == 'project'
         save_project(data)
       elsif data['type'] == 'permanode'
@@ -75,6 +75,13 @@ module Decentral
     end
 
     def self.save_project(params)
+      # TODO
+      # - fetch permanode
+      # - compare permanode creator to permanode signer, raise if not same
+      # - compare permanode creator to project profile signer, raise if not same
+      # - store creator on Project#permanode_creator_uport_address
+      # - compare permanode creator to signer, raise if not same
+
       orig_params = params.dup
       skill_list = params.delete('skills')
       params.delete('type')
@@ -95,7 +102,7 @@ module Decentral
       # }
     end
 
-    def self.save_reputon(reputons_envelope)
+    def self.save_reputon(reputons_envelope, signer, ipfs_key)
       log reputons_envelope
       application = reputons_envelope['application']
       if application != 'skills'
