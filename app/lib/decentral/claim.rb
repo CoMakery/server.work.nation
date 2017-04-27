@@ -1,28 +1,34 @@
-require_relative 'errors'
-
 module Decentral
   class Claim
-    CONTRACT_ABI = JSON.parse %([{"constant":false,"inputs":[{"name":"claim","type":"string"}],"name":"getSigner","outputs":[{"name":"_signer","type":"address"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_claim","type":"string"}],"name":"put","outputs":[{"name":"_success","type":"bool"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"index","type":"uint256"}],"name":"getClaim","outputs":[{"name":"_claim","type":"string"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"claimCount","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"claims","outputs":[{"name":"","type":"string"}],"payable":false,"type":"function"},{"payable":false,"type":"fallback"}])
+    extend Decentral::Log
+
+    CLAIM_CONTRACT_ADDRESS = '0x3f79a56038c339bc87853ca17026c3eddf9cfa9b'
+    CLAIM_CONTRACT_ABI = JSON.parse %([{"constant":false,"inputs":[{"name":"claim","type":"string"}],"name":"getSigner","outputs":[{"name":"_signer","type":"address"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_claim1","type":"string"},{"name":"_claim2","type":"string"}],"name":"put","outputs":[{"name":"_success","type":"bool"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_claim","type":"string"}],"name":"put","outputs":[{"name":"_success","type":"bool"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"index","type":"uint256"}],"name":"getClaim","outputs":[{"name":"_claim","type":"string"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"claimCount","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"claims","outputs":[{"name":"","type":"string"}],"payable":false,"type":"function"},{"constant":false,"inputs":[],"name":"whoami","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function"},{"payable":false,"type":"fallback"}])
     REDIS = if ENV['REDISTOGO_URL']
       Redis.new(url: URI.parse(ENV['REDISTOGO_URL']))
     else
       Redis.new
     end
 
+    def self.reset_claim_count
+      REDIS.set('known_claim_count', -1)
+    end
+
     def self.get_latest_claims
+      # pry.debugger
       client = Ethereum::HttpClient.new(ENV['ETHEREUM_RPC_URL'])
 
       contract = Ethereum::Contract.create(
-        name: 'Claim',
-        abi: CONTRACT_ABI,
-        address: '0x8cb4cb36e7cc72bb84f48daed7cb8071c3f55f8f',
-        client: client,
+          name: 'Claim',
+          address: CLAIM_CONTRACT_ADDRESS,
+          abi: CLAIM_CONTRACT_ABI,
+          client: client,
       )
 
       claim_count = contract.call.claim_count
       known_claim_count = Integer(REDIS.get('known_claim_count') || -1)
-      log "Max known claim in Ethereum: #{claim_count - 1}".green
-      log "Max known claim in local db: #{known_claim_count}".green
+      log_counts "Max known claim in Ethereum: #{claim_count - 1}"
+      log_counts "Max known claim in local db: #{known_claim_count}"
 
       (known_claim_count + 1...claim_count).each do |claim_index|
         get_claim(claim_index, contract)
@@ -43,7 +49,47 @@ module Decentral
         raise NotFound, "Error fetching #{ipfs_url} -- #{response.body} -- #{response.code}"
       end
 
-      reputons_envelope = JSON.parse(response.body)
+      begin
+        content = response.body
+        data = JSON.parse(content)
+      rescue JSON::ParserError => error
+        raise Decentral::InvalidFormatError, "Expected JSON from #{ipfs_url}, but got: [[ #{content[0...1000]} ]]"
+      end
+
+      if data.keys.sort == %w[ application reputons ]
+        save_reputon(data)
+      elsif data['type'] == "project"
+        save_project(data)
+      elsif data['type'] == "permanode"
+        log_info "permanode:", data
+      else
+        raise Decentral::InvalidFormat, "Could not determine claim type; content: [[ #{content[0...1000]} ]]"
+      end
+
+
+      log "SETTING known_claim_count: #{claim_index}".green
+      REDIS.set('known_claim_count', claim_index)
+    rescue DecentralError => e
+      log "SETTING known_claim_count: #{claim_index}".green
+      REDIS.set('known_claim_count', claim_index)
+      handle_error e
+    end
+
+    def self.save_project(params)
+      Project.create! params.except(:type).deep_transform_keys!(&:underscore)
+
+      # {
+      #     address: "",
+      #     contact: "",
+      #     imageUrl: "",
+      #     permanodeId: "/ipfs/QmY6GV3ME9DYEtYYHTwnBB33VFXsLGF2K4JuJBam8eLXyf",
+      #     skills: "",
+      #     title: "",
+      #     type: "project"
+      # }
+    end
+
+    def self.save_reputon(reputons_envelope)
       log reputons_envelope
       application = reputons_envelope['application']
       if application != 'skills'
@@ -55,20 +101,10 @@ module Decentral
         begin
           reputon = Claim.new(reputon_data, signer, ipfs_key)
           reputon.save!
-        rescue ReputonError => e
+        rescue DecentralError => e
           handle_error e
         end
       end
-      log "SETTING known_claim_count: #{claim_index}".green
-      REDIS.set('known_claim_count', claim_index)
-    rescue ReputonError => e
-      log "SETTING known_claim_count: #{claim_index}".green
-      REDIS.set('known_claim_count', claim_index)
-      handle_error e
-    end
-
-    def self.log(msg)
-      Rails.logger.info msg
     end
 
     def self.handle_error(error, params = {})
@@ -100,8 +136,8 @@ module Decentral
       skill = user.skills.find_by(ipfs_reputon_key: @ipfs_key)
       return if skill.present?
       log user.skills.create!(
-        name: @data['assertion'],
-        ipfs_reputon_key: @ipfs_key,
+          name: @data['assertion'],
+          ipfs_reputon_key: @ipfs_key,
       )
     end
 
@@ -119,20 +155,39 @@ module Decentral
       confirmation = Confirmation.find_by(ipfs_reputon_key: @ipfs_key)
       return if confirmation.present?
       log confirmer.confirmations.create!(
-        user: confirmer,
-        skill: skill,
-        claimant: skill.user,
-        rating: @data['rating'],
-        ipfs_reputon_key: @ipfs_key,
+          user: confirmer,
+          skill: skill,
+          claimant: skill.user,
+          rating: @data['rating'],
+          ipfs_reputon_key: @ipfs_key,
       )
     end
 
     def address(candidate)
       candidate&.sub(/^0x/, '')
     end
-
-    def log(msg)
-      self.class.log(msg)
-    end
   end
+
+  class DecentralError < StandardError;
+  end
+
+  # DecentralError:
+
+  class NotFound < DecentralError;
+  end
+
+  class InvalidFormat < DecentralError;
+  end
+
+  class ReputonError < DecentralError;
+  end
+
+  # ReputonError:
+
+  class ReputonInvalid < ReputonError;
+  end
+
+  class ReputonSignatureInvalid < ReputonError;
+  end
+
 end

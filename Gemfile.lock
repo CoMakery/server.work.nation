@@ -94,8 +94,6 @@ GEM
     faraday (0.12.1)
       multipart-post (>= 1.2, < 3)
     ffi (1.9.18)
-    foreman (0.84.0)
-      thor (~> 0.19.1)
     globalid (0.4.0)
       activesupport (>= 4.2.0)
     hashie (3.5.5)
@@ -187,8 +185,6 @@ GEM
       ffi (>= 0.5.0)
     redis (3.3.3)
     require_all (1.4.0)
-    rerun (0.11.0)
-      listen (~> 3.0)
     rspec-core (3.5.4)
       rspec-support (~> 3.5.0)
     rspec-expectations (3.5.0)
@@ -270,7 +266,6 @@ DEPENDENCIES
   ethereum.rb!
   factory_girl_rails
   faker
-  foreman
   httparty
   listen
   pattern_expander!
@@ -283,7 +278,6 @@ DEPENDENCIES
   rails (= 5.1.0.rc2)
   rails_12factor
   rails_best_practices
-  rerun
   rspec-rails
   rubocop
   rubocop-rspec

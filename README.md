@@ -6,9 +6,10 @@
 
 ## Start server
 
-    foreman start  # to start server + sidekiq
+    gem install foreman rerun  # should be installed globally, NOT in Gemfile
+    foreman start        # to start server + sidekiq
     # or
-    rails server   # just server
+    rails server         # just server
 
 ## Create seed data
 
