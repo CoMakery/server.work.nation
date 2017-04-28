@@ -1,4 +1,4 @@
-class Skill < ApplicationRecord
+class SkillClaim < ApplicationRecord
   belongs_to :user, foreign_key: :skill_claimant_id
   has_many :confirmations
 

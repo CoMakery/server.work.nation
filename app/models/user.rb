@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  has_many :skills, foreign_key: :skill_claimant_id
+  has_many :skill_claims, foreign_key: :skill_claimant_id
   has_many :confirmations, foreign_key: :confirmer_id
 
   validates :uport_address, presence: true, uniqueness: true, format: { with: /\A0x[0-9a-fA-F]{40}\z/ }
@@ -14,7 +14,7 @@ class User < ApplicationRecord
       uportAddress: uport_address,
       avatar_image_ipfs_key: avatar_image_ipfs_key,
       banner_image_ipfs_key: banner_image_ipfs_key,
-      skills: skills.map { |skill| skill.as_json(options) },
+      skill_claims: skill_claims.map { |skill_claim| skill_claim.as_json(options) },
     }
   end
 
@@ -26,5 +26,7 @@ class User < ApplicationRecord
       avatar_image_ipfs_key: profile['image'].try(:[], 'contentUrl')&.sub('/ipfs/', ''),
       banner_image_ipfs_key: profile['banner'].try(:[], 'contentUrl')&.sub('/ipfs/', ''),
     )
+  rescue Decentral::DecentralError => error
+    Decentral.handle_error error
   end
 end

@@ -1,12 +1,8 @@
 source 'https://rubygems.org'
 ruby '2.3.1'
 
-# git_source(:github) do |repo_name|
-#   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
-#   "https://github.com/#{repo_name}.git"
-# end
-
 # gem 'airbrake'
+gem 'acts-as-taggable-on', git: 'https://github.com/mbleigh/acts-as-taggable-on.git' # until this fix is released to rubygems: https://github.com/mbleigh/acts-as-taggable-on/issues/808
 gem 'awesome_print'
 gem 'base58', git: 'https://github.com/CoMakery/base58.git', ref: '546c86193002d1e0beed8335044649845f6650dc'
 gem 'colorize'

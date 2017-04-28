@@ -4,7 +4,7 @@ RSpec.describe Confirmation, type: :model do
   describe 'validations' do
     let(:confirmation) { Confirmation.new.tap(&:valid?) }
 
-    specify { expect(confirmation.errors[:skill_id]).to eq(["can't be blank"]) }
+    specify { expect(confirmation.errors[:skill_claim_id]).to eq(["can't be blank"]) }
     specify { expect(confirmation.errors[:confirmer_id]).to eq(["can't be blank"]) }
     specify { expect(confirmation.errors[:skill_claimant_id]).to eq(["can't be blank", "can't self confirm"]) }
     specify { expect(confirmation.errors[:rating]).to eq(["can't be blank"])  }

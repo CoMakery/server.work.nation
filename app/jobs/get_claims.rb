@@ -1,6 +1,6 @@
 require 'sidekiq-scheduler'
 
-class GetReputons
+class GetClaims
   include Sidekiq::Worker
 
   def perform

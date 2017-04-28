@@ -1,3 +1,5 @@
+require_relative '../lib/decentral'
+
 class UpdateProfile
   include Sidekiq::Worker
 

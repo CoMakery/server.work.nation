@@ -6,10 +6,10 @@ if Rails.env.development? || ENV['ALLOW_SEED_DATA']
 
   include FactoryGirl::Syntax::Methods
   USERS.times do
-    create :user, :random_skills, :random_address
+    create :user, :random_skill_claims, :random_address
   end
 
   (USERS * 10).times do
-    create :confirmation, :random_skill, :random_confirmer, :random_ipfs
+    create :confirmation, :random_skill_claim, :random_confirmer, :random_ipfs
   end
 end

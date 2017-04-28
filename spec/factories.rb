@@ -30,10 +30,10 @@ FactoryGirl.define do
     avatar_image_ipfs_key
     banner_image_ipfs_key
 
-    trait :random_skills do
+    trait :random_skill_claims do
       after(:create) do |user|
         SKILL.sample(rand(0..7)).each do |skill_name|
-          create(:skill, user: user, name: skill_name)
+          create(:skill_claim, user: user, name: skill_name)
         end
       end
     end
@@ -46,15 +46,15 @@ FactoryGirl.define do
       uport_address { '0x' + 40.times.map { (('0'..'9').to_a + ('a'..'f').to_a).sample }.join }
     end
 
-    trait :with_skills do
+    trait :with_skill_claims do
       after(:create) do |user|
-        create(:skill, :confirmed, user: user)
-        create(:skill, :unconfirmed, user: user)
+        create(:skill_claim, :confirmed, user: user)
+        create(:skill_claim, :unconfirmed, user: user)
       end
     end
   end
 
-  factory :skill do
+  factory :skill_claim do
     name { SKILL.sample }
 
     transient do
@@ -73,10 +73,10 @@ FactoryGirl.define do
     trait :confirmed do
       name 'Ruby on Rails'
       project_count 5
-      after(:create) do |skill|
+      after(:create) do |skill_claim|
         3.times do
           create :confirmation,
-            skill_id: skill.id
+            skill_claim_id: skill_claim.id
         end
       end
     end
@@ -87,11 +87,11 @@ FactoryGirl.define do
     ipfs_reputon_key # { "Qm" + 44.times.map { 'z' }.join }
 
     confirmer_id { create(:user, :joe).id }
-    skill_claimant_id { Skill.find(skill_id).skill_claimant_id }
+    skill_claimant_id { SkillClaim.find(skill_claim_id).skill_claimant_id }
 
-    trait :random_skill do
-      skill_id { Skill.all.sample.id }
-      skill_claimant_id { Skill.find(skill_id).skill_claimant_id }
+    trait :random_skill_claim do
+      skill_claim_id { SkillClaim.all.sample.id }
+      skill_claimant_id { SkillClaim.find(skill_claim_id).skill_claimant_id }
     end
 
     trait :random_confirmer do

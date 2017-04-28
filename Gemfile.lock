@@ -21,6 +21,13 @@ GIT
   specs:
     pattern_expander (0.0.2)
 
+GIT
+  remote: https://github.com/mbleigh/acts-as-taggable-on.git
+  revision: 9bb57384398cd3e198c893b0345c7b26e3b5ad5e
+  specs:
+    acts-as-taggable-on (4.0.0)
+      activerecord (>= 4.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -261,6 +268,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  acts-as-taggable-on!
   awesome_print
   base58!
   brakeman

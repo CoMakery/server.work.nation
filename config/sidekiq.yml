@@ -2,6 +2,6 @@
   :verbose: true
   :concurrency: 1
   :schedule:
-    get_reputons:
+    get_claims:
       every: 15s
-      class: GetReputons
+      class: GetClaims

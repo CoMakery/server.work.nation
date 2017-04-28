@@ -2,11 +2,6 @@ require: rubocop-rspec
 
 AllCops:
   Exclude:
-    - 'db/migrate/20170405074402_create_projects.rb'
-    - 'db/migrate/20170406232832_create_users.rb'
-    - 'db/migrate/20170407032233_create_skills.rb'
-    - 'db/migrate/20170412181238_create_confirmations.rb'
-    - 'db/migrate/20170417234130_rename_columns.rb'
     - 'db/schema.rb'
     - 'tmp/**/*'
     - 'vendor/**/*'
@@ -21,6 +16,7 @@ Lint/EndAlignment:
 Metrics/AbcSize:
   Exclude:
     - 'app/lib/decentral/*.rb'
+    - 'db/migrate/*.rb'
 
 Metrics/BlockLength:
   Enabled: false
@@ -35,6 +31,7 @@ Metrics/LineLength:
 Metrics/MethodLength:
   Exclude:
     - 'app/lib/decentral/*.rb'
+    - 'db/migrate/*.rb'
 
 Performance/TimesMap:
   Exclude:
