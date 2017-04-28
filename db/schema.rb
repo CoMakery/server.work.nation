@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(version: 20170427055458) do
     t.text "contact"
     t.text "image_url"
     t.text "permanode_id"
+    t.text "permanode_creator_uport_address"
   end
 
   create_table "skill_claims", force: :cascade do |t|
