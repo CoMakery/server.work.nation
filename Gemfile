@@ -17,7 +17,7 @@ gem 'pattern_expander', git: 'https://github.com/harlantwood/pattern_expander.gi
 gem 'pg'
 gem 'puma'
 gem 'rack-cors' # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
-gem 'rails', '5.1.0.rc2'
+gem 'rails', '5.1.0'
 gem 'sentry-raven'
 gem 'sidekiq'
 gem 'sidekiq-failures'
