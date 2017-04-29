@@ -33,7 +33,7 @@ FactoryGirl.define do
     trait :random_skill_claims do
       after(:create) do |user|
         SKILL.sample(rand(0..7)).each do |skill_name|
-          create(:skill_claim, user: user, name: skill_name)
+          create(:skill_claim, :random_ipfs, user: user, name: skill_name)
         end
       end
     end
@@ -63,7 +63,11 @@ FactoryGirl.define do
 
     project_count { count_seed }
 
-    ipfs_reputon_key # { "Qm" + 44.times.map { 'z' }.join }
+    ipfs_reputon_key
+
+    trait :random_ipfs do
+      ipfs_reputon_key { 'Qm' + 44.times.map { BASE58_ALPHABET.split('').sample }.join }
+    end
 
     trait :unconfirmed do
       name 'Elixir'
