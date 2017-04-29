@@ -1,11 +1,11 @@
 module Decentral
   def self.handle_error(error, params = {})
-    Rails.logger.error 'in Decentral handle_error'.bold
+    raise(error) if Rails.env.test?
 
-    params.reverse_merge! level: 'info'
-    Rails.logger.error error.message.to_s.red
+    Rails.logger.error('in Decentral handle_error'.bold)
+    Rails.logger.error(error.message.to_s.red)
     # Airbrake.notify error, params
-    Raven.capture_exception error, params
+    Raven.capture_exception(error, params.reverse_merge(level: 'info'))
   end
 
   class DecentralError < StandardError
@@ -13,10 +13,10 @@ module Decentral
 
   # DecentralError:
 
-  class NotFound < DecentralError
+  class NotFoundError < DecentralError
   end
 
-  class InvalidFormat < DecentralError
+  class InvalidFormatError < DecentralError
   end
 
   class ReputonError < DecentralError
@@ -24,10 +24,10 @@ module Decentral
 
   # ReputonError:
 
-  class ReputonInvalid < ReputonError
+  class ReputonFormatError < ReputonError
   end
 
-  class ReputonSignatureInvalid < ReputonError
+  class ReputonSignatureError < ReputonError
   end
 end
 
