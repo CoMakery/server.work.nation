@@ -13,6 +13,9 @@ AllCops:
 Lint/EndAlignment:
   EnforcedStyleAlignWith: variable
 
+Lint/RequireParentheses:
+  Enabled: true
+
 Metrics/AbcSize:
   Exclude:
     - 'app/lib/decentral/*.rb'
@@ -66,6 +69,13 @@ Style/IndentHash:
   EnforcedStyle: consistent
 
 Style/IndentationConsistency:
+  Enabled: false
+
+Style/NumericLiterals:
+  Enabled: false
+
+# Don't turn this on, it's overzealous
+Style/MethodCallWithArgsParentheses:
   Enabled: false
 
 Style/TrailingCommaInArguments:
