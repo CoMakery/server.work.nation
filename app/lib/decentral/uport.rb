@@ -32,7 +32,7 @@ module Decentral
       response = HTTParty.get(ipfs_url)
       log response.code
       if response.code != 200
-        raise Decentral::NotFound, "Error fetching #{ipfs_url} -- #{response.body} -- #{response.code}"
+        raise Decentral::NotFoundError, "Error fetching #{ipfs_url} -- #{response.body} -- #{response.code}"
       end
 
       profile = JSON.parse(response.body)
