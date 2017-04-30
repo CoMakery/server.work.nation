@@ -1,16 +1,16 @@
 require_relative 'boot'
 
-require 'rails'
+require "rails"
 # Pick the frameworks you want:
-require 'active_model/railtie'
-require 'active_job/railtie'
-require 'active_record/railtie'
-require 'action_controller/railtie'
-require 'action_mailer/railtie'
-require 'action_view/railtie'
-require 'action_cable/engine'
+require "active_model/railtie"
+require "active_job/railtie"
+require "active_record/railtie"
+require "action_controller/railtie"
+require "action_mailer/railtie"
+require "action_view/railtie"
+require "action_cable/engine"
 # require "sprockets/railtie"
-require 'rails/test_unit/railtie'
+require "rails/test_unit/railtie"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -38,14 +38,14 @@ module WorkNation
 
     config.eager_load = false
 
-    if ENV['RAILS_LOG_TO_STDOUT'].present?
-      logger           = ActiveSupport::Logger.new(STDOUT)
-      logger.formatter = config.log_formatter
-      config.logger    = ActiveSupport::TaggedLogging.new(logger)
-    end
-
-    # Use a different logger for distributed setups.
-    # require 'syslog/logger'
-    # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
+    # if ENV['RAILS_LOG_TO_STDOUT'].present?
+    #   logger           = ActiveSupport::Logger.new(STDOUT)
+    #   logger.formatter = config.log_formatter
+    #   config.logger    = ActiveSupport::TaggedLogging.new(logger)
+    # end
+    #
+    # # Use a different logger for distributed setups.
+    # # require 'syslog/logger'
+    # # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
   end
 end
