@@ -1,8 +1,7 @@
 class UsersController < ApplicationController
   # GET /users
   def index
-    @users = User.limit(1000).includes(:skill_claims)
-
+    @users = User.limit(200).includes(:skill_claims)
     render json: @users
   end
 
