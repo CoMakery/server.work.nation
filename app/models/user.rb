@@ -31,6 +31,10 @@ class User < ApplicationRecord
   end
 
   def search_trust_graph(skill, depth: 3)
+    conn = ActiveRecord::Base.connection
+    safe_skill = conn.quote('%' + skill + '%')
+    safe_depth = conn.quote(depth)
+    safe_id = conn.quote(self.id)
     User.find_by_sql(%{
     WITH RECURSIVE trust_graph(confirmer_id, skill_claimant_id, skill_claim_id, depth, path, confirmations_in_graph) AS
     (
@@ -42,7 +46,7 @@ class User < ApplicationRecord
         ARRAY [conf1.confirmer_id, conf1.skill_claimant_id] AS path,
         ARRAY [conf1.id] AS confirmations_in_graph
       FROM confirmations conf1
-      WHERE confirmer_id = #{id}
+      WHERE confirmer_id = #{safe_id}
       UNION
       SELECT
         conf2.confirmer_id,
@@ -53,7 +57,7 @@ class User < ApplicationRecord
         previous_results.confirmations_in_graph || conf2.id
       FROM confirmations conf2, trust_graph previous_results
       WHERE conf2.confirmer_id = previous_results.skill_claimant_id
-        AND depth < #{depth}
+        AND depth < #{safe_depth}
         AND NOT conf2.skill_claimant_id = ANY (path)
         AND NOT conf2.id = ANY (previous_results.confirmations_in_graph)
         AND NOT (previous_results.path || conf2.skill_claimant_id) = previous_results.path
@@ -62,7 +66,7 @@ class User < ApplicationRecord
       FROM trust_graph, users, skill_claims
       WHERE users.id = trust_graph.skill_claimant_id
         AND skill_claims.skill_claimant_id = users.id
-        AND skill_claims.name like '%#{skill}%'
+        AND skill_claims.name like #{safe_skill}
       ORDER BY users.id
       })
   end
