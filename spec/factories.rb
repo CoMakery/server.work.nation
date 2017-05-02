@@ -8,6 +8,10 @@ FactoryGirl.define do
     PatternExpander.new('0x' + ('[+h]' * 40))[n]
   end
 
+  sequence :permanode_creator_uport_address do |n|
+    PatternExpander.new('0x' + ('[+h]' * 40))[n]
+  end
+
   sequence :ipfs_reputon_key do |n|
     PatternExpander.new('QmREPUTON' + ('[+w]' * 37))[n]
   end
@@ -18,6 +22,10 @@ FactoryGirl.define do
 
   sequence :banner_image_ipfs_key do |n|
     PatternExpander.new('QmBANNER' + ('[+w]' * 38))[n]
+  end
+
+  sequence :permanode_id do |n|
+    PatternExpander.new('/ipfs/QmPERMANODE' + ('[+w]' * 35))[n]
   end
 
   sequence :joes do |n|
@@ -109,5 +117,14 @@ FactoryGirl.define do
     trait :random_rating do
       rating { [0.5, 1].sample }
     end
+  end
+
+  factory :project do
+    name { Faker::App.name }
+    address { "https://#{Faker::Internet.domain_name}" }
+    contact { Faker::Internet.safe_email }
+    image_url { Faker::Placeholdit.image('256x256', 'jpg', 'ffffff', '000', name) }
+    permanode_id
+    permanode_creator_uport_address
   end
 end

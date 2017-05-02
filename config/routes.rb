@@ -2,8 +2,9 @@ require 'sidekiq/web'
 
 Rails.application.routes.draw do
   root 'users#index'
+  resources :projects, only: %i[index]
   resources :users, only: %i[index show], param: :uport_address
-  resources :projects
+  resources :skills, only: %i[index]
 
   unless Rails.env.development? || Rails.env.test?
     Sidekiq::Web.use Rack::Auth::Basic, 'Sidekiq' do |_username, password|
