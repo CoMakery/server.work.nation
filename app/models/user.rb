@@ -30,7 +30,7 @@ class User < ApplicationRecord
     Decentral.handle_error error
   end
 
-  def search_trust_graph(skill, depth: 1)
+  def search_trust_graph(skill, depth: 3)
     User.find_by_sql(%{
     WITH RECURSIVE trust_graph(confirmer_id, skill_claimant_id, skill_claim_id, depth, path, confirmations_in_graph) AS
     (
@@ -53,7 +53,7 @@ class User < ApplicationRecord
         previous_results.confirmations_in_graph || conf2.id
       FROM confirmations conf2, trust_graph previous_results
       WHERE conf2.confirmer_id = previous_results.skill_claimant_id
-        AND depth < 3
+        AND depth < #{depth}
         AND NOT conf2.skill_claimant_id = ANY (path)
         AND NOT conf2.id = ANY (previous_results.confirmations_in_graph)
         AND NOT (previous_results.path || conf2.skill_claimant_id) = previous_results.path
@@ -63,7 +63,6 @@ class User < ApplicationRecord
       WHERE users.id = trust_graph.skill_claimant_id
         AND skill_claims.skill_claimant_id = users.id
         AND skill_claims.name like '%#{skill}%'
-        AND skill_claims.skill_claimant_id != #{id}
       ORDER BY users.id
       })
   end
