@@ -5,7 +5,7 @@ cp db/schema.rb tmp/tmp-schema.rb
 bin/rails db:environment:set RAILS_ENV=test
 RAILS_ENV=test bundle exec rake db:migrate VERSION=0 > /dev/null              # migrate down
 RAILS_ENV=test bundle exec rake db:migrate > /dev/null                        # migrate up
-RAILS_ENV=test ALLOW_SEED_DATA=true SEED_DATA_USERS=3 bundle exec rake db:reset db:seed > /dev/null  # load seed data in test env (make sure db seeds work)
+RAILS_ENV=test ALLOW_SEED_DATA=true SEEDS=3 bundle exec rake db:reset db:seed > /dev/null  # load seed data in test env (make sure db seeds work)
 cp tmp/tmp-schema.rb db/schema.rb
 bundle exec rake db:test:prepare
 if [ -z $CI ]; then
