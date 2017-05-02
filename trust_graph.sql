@@ -1,4 +1,4 @@
-WITH RECURSIVE trust_graph(confirmer_id, skill_claimant_id, skill_id, depth, path, confirmations_in_graph) AS (
+WITH RECURSIVE trust_graph(confirmer_id, skill_claimant_id, skill_claim_id, depth, path, confirmations_in_graph) AS (
   SELECT
     conf1.confirmer_id,
     conf1.skill_claimant_id,
@@ -23,9 +23,13 @@ WITH RECURSIVE trust_graph(confirmer_id, skill_claimant_id, skill_id, depth, pat
         AND NOT conf2.id = ANY (previous_results.confirmations_in_graph)
         AND NOT (previous_results.path || conf2.skill_claimant_id) = previous_results.path
 )
-SELECT DISTINCT skill_claimant_id
-FROM trust_graph
-WHERE skill_claim_id = 1;
+SELECT DISTINCT users.id, users.*
+FROM trust_graph, users
+WHERE users.id = skill_claimant_id;
+
+-- SELECT DISTINCT trust_graph.skill_claimant_id
+-- FROM trust_graph
+-- WHERE skill_claim_id = 1;
 
 -- SELECT DISTINCT path,
 --   skill_claimant_id,
