@@ -1,7 +1,16 @@
 class UsersController < ApplicationController
   # GET /users
+  #
+  # search:
+  # /users?perspective=0xff902fc776998336a213c5c6050a4572b7453643&skill=UX&depth=4
   def index
-    @users = User.limit(200).includes(:skill_claims)
+    if params[:perspective]
+      trust_graph_root_user = User.find_by(uport_address: params[:perspective])
+      @users = trust_graph_root_user.search_trust_graph(params[:skill], depth: params[:depth])
+    else
+      @users = User.limit(200).includes(:skill_claims)
+    end
+
     render json: @users
   end
 

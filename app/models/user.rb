@@ -34,7 +34,7 @@ class User < ApplicationRecord
     conn = ActiveRecord::Base.connection
     safe_skill = conn.quote('%' + skill + '%')
     safe_depth = conn.quote(depth)
-    safe_id = conn.quote(self.id)
+    safe_id = conn.quote(id)
     User.find_by_sql(%{
     WITH RECURSIVE trust_graph(confirmer_id, skill_claimant_id, skill_claim_id, depth, path, confirmations_in_graph) AS
     (
