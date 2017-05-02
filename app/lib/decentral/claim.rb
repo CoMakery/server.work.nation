@@ -157,7 +157,7 @@ module Decentral
       confirmation = Confirmation.find_by(ipfs_reputon_key: ipfs_key)
       return if confirmation.present?
       log confirmer.confirmations.create!(
-        user: confirmer,
+        confirmer: confirmer,
         skill_claim: skill_claim,
         claimant: skill_claim.user,
         rating: reputon_data['rating'],

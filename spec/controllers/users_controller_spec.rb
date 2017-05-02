@@ -1,4 +1,4 @@
-require_relative '../rails_helper'
+require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
   let(:valid_session) { {} }

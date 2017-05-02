@@ -1,7 +1,7 @@
 class Confirmation < ApplicationRecord
   belongs_to :skill_claim,
     counter_cache: true # to use cached db column: skill.confirmations_count (not skill.confirmations.count)
-  belongs_to :user, foreign_key: :confirmer_id
+  belongs_to :confirmer, foreign_key: :confirmer_id, class_name: 'User'
   belongs_to :claimant, foreign_key: :skill_claimant_id, class_name: 'User'
 
   validates :skill_claim_id, :confirmer_id, :skill_claimant_id, :rating, :ipfs_reputon_key, presence: true
@@ -15,8 +15,8 @@ class Confirmation < ApplicationRecord
 
   def as_json(_options = {})
     {
-      confirmerUportAddress: user.uport_address,
-      confirmerName: user.name,
+      confirmerUportAddress: confirmer.uport_address,
+      confirmerName: confirmer.name,
       rating: rating,
       ipfsReputonKey: ipfs_reputon_key,
     }
