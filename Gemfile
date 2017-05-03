@@ -12,6 +12,7 @@ gem 'ethereum.rb', git: 'https://github.com/CoMakery/ethereum.rb.git', ref: 'dev
 gem 'factory_girl_rails'  # used on staging for seed data
 gem 'faker'               # used on staging for seed data
 gem 'httparty'
+gem "olive_branch"
 gem 'pattern_expander', git: 'https://github.com/harlantwood/pattern_expander.git', ref: 'hex' # used on staging for seed data
 # gem 'pattern_expander', path: '~/code/pattern_expander'    # used on staging for seed data
 gem 'pg'

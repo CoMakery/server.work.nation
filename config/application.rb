@@ -47,5 +47,7 @@ module WorkNation
     # # Use a different logger for distributed setups.
     # # require 'syslog/logger'
     # # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
+
+    config.middleware.use OliveBranch::Middleware
   end
 end
