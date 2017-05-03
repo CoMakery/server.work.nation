@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
-  # GET /users
+  # index:
+  # /users
   #
   # search:
   # /users?perspective=0xff902fc776998336a213c5c6050a4572b7453643&skill=UX&depth=4
