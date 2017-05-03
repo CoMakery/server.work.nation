@@ -43,6 +43,7 @@ RSpec.describe UsersController, type: :controller do
       before { get :show, params: { uport_address: user.to_param }, session: valid_session }
 
       specify do
+        data['skillClaims'].map! { |claim| claim.without('createdAt') } # difficult to test with creation time
         expect(data).to eq(
           'name' => user.name,
           'avatarImageIpfsKey' => 'QmAVATARaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaae',
@@ -51,7 +52,7 @@ RSpec.describe UsersController, type: :controller do
           'skillClaims' => [
             {
               'name' => 'Ruby on Rails',
-              'confirmationCount' => 3,
+              'confirmationsCount' => 3,
               'projectCount' => 5,
               'ipfsReputonKey' => 'QmREPUTONaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab',
               'confirmations' => [
@@ -77,7 +78,7 @@ RSpec.describe UsersController, type: :controller do
             },
             {
               'name' => 'Elixir',
-              'confirmationCount' => 0,
+              'confirmationsCount' => 0,
               'projectCount' => 0,
               'ipfsReputonKey' => 'QmREPUTONaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaf',
               'confirmations' => [],

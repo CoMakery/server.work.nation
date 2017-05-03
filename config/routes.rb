@@ -3,7 +3,9 @@ require 'sidekiq/web'
 Rails.application.routes.draw do
   root 'users#index'
   resources :projects, only: %i[index]
-  resources :users, only: %i[index show], param: :uport_address
+  resources :users, only: %i[index show], param: :uport_address do
+    get 'confirmables', to: 'skill_claims#confirmables'
+  end
   resources :skills, only: %i[index]
 
   unless Rails.env.development? || Rails.env.test?

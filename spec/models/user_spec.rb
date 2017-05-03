@@ -4,13 +4,13 @@ RSpec.describe User, type: :model do
   let(:user) { create :user }
 
   specify do
-    expect(user.as_json.keys).to match_array(%i[
-                                               name
-                                               uportAddress
-                                               skillClaims
-                                               avatarImageIpfsKey
-                                               bannerImageIpfsKey
-                                             ])
+    expect(user.as_json(skill_claims: true).keys).to match_array(%i[
+                                                                   name
+                                                                   uportAddress
+                                                                   skillClaims
+                                                                   avatarImageIpfsKey
+                                                                   bannerImageIpfsKey
+                                                                 ])
   end
 
   describe '#search_trust_graph' do

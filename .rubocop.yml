@@ -19,6 +19,7 @@ Lint/RequireParentheses:
   Enabled: true
 
 Metrics/AbcSize:
+  Max: 20
   Exclude:
     - 'app/lib/decentral/*.rb'
     - 'db/migrate/*.rb'
@@ -34,6 +35,7 @@ Metrics/LineLength:
   Enabled: false
 
 Metrics/MethodLength:
+  Max: 20
   Exclude:
     - 'app/lib/decentral/*.rb'
     - 'db/migrate/*.rb'

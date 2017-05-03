@@ -44,13 +44,14 @@ class User < ApplicationRecord
   end
 
   def as_json(options = {})
-    {
+    fields = {
       name: name,
       uportAddress: uport_address,
       avatarImageIpfsKey: avatar_image_ipfs_key,
       bannerImageIpfsKey: banner_image_ipfs_key,
-      skillClaims: skill_claims.map { |skill_claim| skill_claim.as_json(options) },
     }
+    fields[:skillClaims] = skill_claims.as_json(options) if options[:skill_claims]
+    fields
   end
 
   def update_from_uport_profile!

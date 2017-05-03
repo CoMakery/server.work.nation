@@ -22,5 +22,5 @@ if Rails.env.development? || ENV['ALLOW_SEED_DATA']
   end
 
   sofia = User.first
-  sofia.update!(name: 'Sofia Lee', uport_address: "0xfdab345e368120a5ba99549c1f74371cd73cdb93")
+  sofia.update!(name: 'Sofia Lee', uport_address: '0xfdab345e368120a5ba99549c1f74371cd73cdb93')
 end

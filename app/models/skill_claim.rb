@@ -8,11 +8,21 @@ class SkillClaim < ApplicationRecord
   def as_json(options = {})
     fields = {
       name: name,
-      confirmationCount: confirmations_count,
+      confirmationsCount: confirmations_count,
       projectCount: project_count,
       ipfsReputonKey: ipfs_reputon_key,
+      createdAt: created_at,
     }
     fields[:confirmations] = confirmations.as_json if options[:confirmations]
+    fields[:user] = user.as_json if options[:user]
+    # fields[:project] = project.as_json if options[:project]
+    if options[:confirmed_by?].present?
+      confirmer_uport_address = options[:confirmed_by?]
+      fields[:confirmedStatus] = {
+        confirmer_uport_address =>
+            confirmations.includes(:confirmer).where('users.uport_address': confirmer_uport_address).exists?,
+      }
+    end
     fields
   end
 end
