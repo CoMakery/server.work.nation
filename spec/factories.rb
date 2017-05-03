@@ -102,12 +102,12 @@ FactoryGirl.define do
     skill_claimant_id { SkillClaim.find(skill_claim_id).skill_claimant_id }
 
     trait :random_skill_claim do
-      skill_claim_id { SkillClaim.all.sample.id }
+      skill_claim_id { SkillClaim.order('RANDOM()').first.id }
       skill_claimant_id { SkillClaim.find(skill_claim_id).skill_claimant_id }
     end
 
     trait :random_confirmer do
-      confirmer_id { (User.all - [User.find_by(id: skill_claimant_id)]).sample.id }
+      confirmer_id { User.where.not(id: skill_claimant_id).order('RANDOM()').first.id }
     end
 
     trait :random_ipfs do

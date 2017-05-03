@@ -4,17 +4,20 @@
 if Rails.env.development? || ENV['ALLOW_SEED_DATA']
   include FactoryGirl::Syntax::Methods
 
-  QUANTITY = Integer(ENV['SEEDS'] || 10)
+  SEEDS = Integer(ENV['SEEDS'] || 10)
+  SEEDS_USERS = Integer(ENV['SEEDS_USERS'] || SEEDS)
+  SEEDS_CONFIRMATIONS = Integer(ENV['SEEDS_CONFIRMATIONS'] || SEEDS * 10)
+  SEEDS_PROJECTS = Integer(ENV['SEEDS_PROJECTS'] || SEEDS * 10)
 
-  (QUANTITY * 10).times do
-    create :project
-  end
-
-  QUANTITY.times do
+  SEEDS_USERS.times do
     create :user, :random_skill_claims, :random_address
   end
 
-  (QUANTITY * 10).times do
+  SEEDS_CONFIRMATIONS.times do
     create :confirmation, :random_skill_claim, :random_confirmer, :random_ipfs
+  end
+
+  SEEDS_PROJECTS.times do
+    create :project
   end
 end
