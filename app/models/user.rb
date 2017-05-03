@@ -47,9 +47,9 @@ class User < ApplicationRecord
     {
       name: name,
       uportAddress: uport_address,
-      avatar_image_ipfs_key: avatar_image_ipfs_key,
-      banner_image_ipfs_key: banner_image_ipfs_key,
-      skill_claims: skill_claims.map { |skill_claim| skill_claim.as_json(options) },
+      avatarImageIpfsKey: avatar_image_ipfs_key,
+      bannerImageIpfsKey: banner_image_ipfs_key,
+      skillClaims: skill_claims.map { |skill_claim| skill_claim.as_json(options) },
     }
   end
 

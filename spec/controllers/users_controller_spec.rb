@@ -29,9 +29,9 @@ RSpec.describe UsersController, type: :controller do
         expect(json).to eq(
           'uportAddress' => user.uport_address,
           'name' => user.name,
-          'avatar_image_ipfs_key' => 'QmAVATARaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaad',
-          'banner_image_ipfs_key' => 'QmBANNERaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaad',
-          'skill_claims' => [],
+          'avatarImageIpfsKey' => 'QmAVATARaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaad',
+          'bannerImageIpfsKey' => 'QmBANNERaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaad',
+          'skillClaims' => [],
         )
       end
     end
@@ -45,10 +45,10 @@ RSpec.describe UsersController, type: :controller do
       specify do
         expect(data).to eq(
           'name' => user.name,
-          'avatar_image_ipfs_key' => 'QmAVATARaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaae',
-          'banner_image_ipfs_key' => 'QmBANNERaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaae',
+          'avatarImageIpfsKey' => 'QmAVATARaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaae',
+          'bannerImageIpfsKey' => 'QmBANNERaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaae',
           'uportAddress' => user.uport_address,
-          'skill_claims' => [
+          'skillClaims' => [
             {
               'name' => 'Ruby on Rails',
               'confirmationCount' => 3,
