@@ -50,7 +50,7 @@ class User < ApplicationRecord
       avatarImageIpfsKey: avatar_image_ipfs_key,
       bannerImageIpfsKey: banner_image_ipfs_key,
     }
-    fields[:skillClaims] = skill_claims.as_json(options) if options[:skill_claims]
+    fields[:skills] = _skills(options) if options[:skills]
     fields
   end
 
@@ -73,5 +73,20 @@ class User < ApplicationRecord
   def self.search_trust_graph(perspective, skill, depth: 3)
     sql = sanitize_sql([TRUST_GRAPH_SQL, perspective, depth, skill])
     User.find_by_sql(sql)
+  end
+
+  def _skills(options)
+    skill_claims.as_json(options).each_with_object({}) do |skill_claim, skills|
+      skill = skills[skill_claim[:name]] ||= { name: skill_claim[:name],
+                                               projectCount: 0,
+                                               confirmationsCount: 0,
+                                               ipfsReputonKeys: [],
+                                               confirmations: [] }
+      skill[:projectCount] += 1
+      skill[:confirmationsCount] += skill_claim[:confirmationsCount]
+      skill[:ipfsReputonKeys] << skill_claim.delete(:ipfsReputonKey)
+      skill[:confirmations] += skill_claim[:confirmations] if skill_claim[:confirmations].present?
+      skills
+    end.values
   end
 end

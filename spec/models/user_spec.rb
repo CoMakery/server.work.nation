@@ -1,20 +1,124 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  let(:user) { create :user }
+  describe '#as_json' do
+    let(:user) { create :user }
 
-  specify do
-    expect(user.as_json(skill_claims: true).keys).to match_array(%i[
-                                                                   name
-                                                                   uportAddress
-                                                                   skillClaims
-                                                                   avatarImageIpfsKey
-                                                                   bannerImageIpfsKey
-                                                                 ])
+    specify do
+      expect(user.as_json(skills: true).keys).to match_array(%i[
+                                                               name
+                                                               uportAddress
+                                                               skills
+                                                               avatarImageIpfsKey
+                                                               bannerImageIpfsKey
+                                                             ])
+    end
+
+    describe 'with one claim for a skill' do
+      let!(:ruby_skill_claim_1) do
+        create :skill_claim,
+          name: 'Ruby',
+          user: user
+      end
+
+      specify do
+        expect(user.as_json(skills: true)).to match(name: user.name,
+                                                    uportAddress: user.uport_address,
+                                                    avatarImageIpfsKey: user.avatar_image_ipfs_key,
+                                                    bannerImageIpfsKey: user.banner_image_ipfs_key,
+                                                    skills: [{ name: 'Ruby',
+                                                               projectCount: 1,
+                                                               confirmationsCount: 0,
+                                                               ipfsReputonKeys: [/QmREPUTON[\w]+/],
+                                                               confirmations: [] }])
+      end
+    end
+
+    describe 'with 2 claims for the same skill no confirmations' do
+      let!(:ruby_skill_claim_1) do
+        create :skill_claim,
+          name: 'Ruby',
+          user: user
+      end
+
+      let!(:ruby_skill_claim_2) do
+        create :skill_claim,
+          name: 'Ruby',
+          user: user
+      end
+
+      specify do
+        expect(user.as_json(skills: true)).to match(name: user.name,
+                                                    uportAddress: user.uport_address,
+                                                    avatarImageIpfsKey: user.avatar_image_ipfs_key,
+                                                    bannerImageIpfsKey: user.banner_image_ipfs_key,
+                                                    skills: [{ name: 'Ruby',
+                                                               projectCount: 2,
+                                                               confirmationsCount: 0,
+                                                               ipfsReputonKeys: [/QmREPUTON[\w]+/,
+                                                                                 /QmREPUTON[\w]+/],
+                                                               confirmations: [] }])
+      end
+    end
+
+    describe 'with 2 claims for the same skill confirmations for both skill claims' do
+      let(:rubyist) { create :user }
+      let!(:confirmer1) { create :user }
+      let!(:confirmer2) { create :user }
+      let!(:confirmer3) { create :user }
+
+      let!(:ruby_skill_claim_1) do
+        create :skill_claim,
+          name: 'Ruby',
+          user: user
+      end
+
+      let!(:ruby_skill_claim_2) do
+        create :skill_claim,
+          name: 'Ruby',
+          user: user
+      end
+
+      before do
+        create :confirmation,
+          skill_claim_id: ruby_skill_claim_1.id,
+          claimant: rubyist,
+          rating: 1,
+          confirmer: confirmer1
+
+        create :confirmation,
+          skill_claim_id: ruby_skill_claim_1.id,
+          claimant: rubyist,
+          rating: 1,
+          confirmer: confirmer2
+
+        create :confirmation,
+          skill_claim_id: ruby_skill_claim_2.id,
+          claimant: rubyist,
+          rating: 1,
+          confirmer: confirmer3
+      end
+
+      specify do
+        expect(user.as_json(skills: true)).to match(name: user.name,
+                                                    uportAddress: user.uport_address,
+                                                    avatarImageIpfsKey: user.avatar_image_ipfs_key,
+                                                    bannerImageIpfsKey: user.banner_image_ipfs_key,
+                                                    skills: [{ name: 'Ruby',
+                                                               projectCount: 2,
+                                                               confirmationsCount: 3,
+                                                               ipfsReputonKeys: [/QmREPUTON[\w]+/,
+                                                                                 /QmREPUTON[\w]+/],
+                                                               confirmations: [] }])
+      end
+    end
   end
 
   describe '#search_trust_graph' do
-    let!(:rubyist_3rd_degree) { create :user, name: 'Rubyist' }
+    let!(:rubyist_3rd_degree) do
+      create :user,
+        name: 'Rubyist'
+    end
     let!(:erlanger_2nd_degree) { create :user, name: 'Erlanger' }
     let!(:javascripter_3rd_degree) { create :user, name: 'Javascripter' }
     let!(:root_user) { create :user, name: 'Unskilled confirmer' }

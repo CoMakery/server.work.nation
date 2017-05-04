@@ -51,6 +51,9 @@ Rails:
 RSpec/ExampleLength:
   Enabled: false
 
+RSpec/LetSetup:
+  Enabled: false
+
 Style/AccessorMethodName:
   Exclude:
     - 'app/lib/decentral/*.rb'
