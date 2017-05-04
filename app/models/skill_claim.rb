@@ -1,6 +1,10 @@
 class SkillClaim < ApplicationRecord
   belongs_to :user, foreign_key: :skill_claimant_id
   has_many :confirmations
+  belongs_to :project,
+    foreign_key: :project_permanode_id,
+    primary_key: :permanode_id,
+    class_name: 'Project'
 
   validates :skill_claimant_id, :ipfs_reputon_key, presence: true
   validates :ipfs_reputon_key, uniqueness: true

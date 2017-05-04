@@ -29,8 +29,8 @@ RSpec.describe UsersController, type: :controller do
         expect(json).to eq(
           'uportAddress' => user.uport_address,
           'name' => user.name,
-          'avatarImageIpfsKey' => 'QmAVATARaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaad',
-          'bannerImageIpfsKey' => 'QmBANNERaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaad',
+          'avatarImageIpfsKey' => user.avatar_image_ipfs_key,
+          'bannerImageIpfsKey' => user.banner_image_ipfs_key,
           'skillClaims' => [],
         )
       end
@@ -44,35 +44,35 @@ RSpec.describe UsersController, type: :controller do
 
       specify do
         data['skillClaims'].map! { |claim| claim.without('createdAt') } # difficult to test with creation time
-        expect(data).to eq(
+        expect(data).to match(
           'name' => user.name,
-          'avatarImageIpfsKey' => 'QmAVATARaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaae',
-          'bannerImageIpfsKey' => 'QmBANNERaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaae',
+          'avatarImageIpfsKey' => user.avatar_image_ipfs_key,
+          'bannerImageIpfsKey' => user.banner_image_ipfs_key,
           'uportAddress' => user.uport_address,
           'skillClaims' => [
             {
               'name' => 'Ruby on Rails',
               'confirmationsCount' => 3,
               'projectCount' => 5,
-              'ipfsReputonKey' => 'QmREPUTONaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab',
+              'ipfsReputonKey' => /QmREPUTON[\w]+/,
               'confirmations' => [
                 {
-                  'confirmerUportAddress' => '0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaf',
+                  'confirmerUportAddress' => /0x[\w]{40}/,
                   'confirmerName' => 'Joe #2',
                   'rating' => 1.0,
-                  'ipfsReputonKey' => 'QmREPUTONaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaac',
+                  'ipfsReputonKey' => /QmREPUTON[\w]+/,
                 },
                 {
-                  'confirmerUportAddress' => '0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa0',
+                  'confirmerUportAddress' => /0x[\w]{40}/,
                   'confirmerName' => 'Joe #3',
                   'rating' => 1.0,
-                  'ipfsReputonKey' => 'QmREPUTONaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaad',
+                  'ipfsReputonKey' => /QmREPUTON[\w]+/,
                 },
                 {
-                  'confirmerUportAddress' => '0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa1',
+                  'confirmerUportAddress' => /0x[\w]{40}/,
                   'confirmerName' => 'Joe #4',
                   'rating' => 1.0,
-                  'ipfsReputonKey' => 'QmREPUTONaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaae',
+                  'ipfsReputonKey' => /QmREPUTON[\w]+/,
                 },
               ],
             },
@@ -80,7 +80,7 @@ RSpec.describe UsersController, type: :controller do
               'name' => 'Elixir',
               'confirmationsCount' => 0,
               'projectCount' => 0,
-              'ipfsReputonKey' => 'QmREPUTONaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaf',
+              'ipfsReputonKey' => /QmREPUTON[\w]+/,
               'confirmations' => [],
             },
           ],

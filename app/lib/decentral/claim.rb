@@ -140,6 +140,7 @@ module Decentral
       log user.skill_claims.create!(
         name: reputon_data['assertion'],
         ipfs_reputon_key: ipfs_key,
+        project_permanode_id: reputon_data['project'],
       )
     end
 

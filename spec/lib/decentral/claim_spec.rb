@@ -6,6 +6,7 @@ describe(Decentral::Claim) do
   describe('.parse') do
     let(:skill_claimant) { create :user }
     let(:confirmer) { create :user }
+    let(:project) { create :project }
     let(:skill_claim_reputon) do
       {
         "application": 'skills',
@@ -13,6 +14,7 @@ describe(Decentral::Claim) do
           {
             "assertion": 'sh',
             "generated": 1493341433,
+            "project": project.permanode_id,
             "rater": skill_claimant.uport_address,
             "rated": skill_claimant.uport_address,
             "rating": 1,

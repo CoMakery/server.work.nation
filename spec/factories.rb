@@ -65,6 +65,8 @@ FactoryGirl.define do
   factory :skill_claim do
     name { SKILL.sample }
 
+    user { create :user }
+
     transient do
       count_seed { rand(0..8) }
     end
@@ -72,6 +74,8 @@ FactoryGirl.define do
     project_count { count_seed }
 
     ipfs_reputon_key
+
+    project_permanode_id { create(:project).permanode_id }
 
     trait :random_ipfs do
       ipfs_reputon_key { 'Qm' + 44.times.map { BASE58_ALPHABET.split('').sample }.join }
