@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   has_many :skill_claims, foreign_key: :skill_claimant_id
   has_many :confirmations, foreign_key: :confirmer_id
+  has_many :projects, through: :skill_claims
 
   validates :uport_address, presence: true, uniqueness: true, format: { with: /\A0x[0-9a-fA-F]{40}\z/ }
 
@@ -49,6 +50,7 @@ class User < ApplicationRecord
       uportAddress: uport_address,
       avatarImageIpfsKey: avatar_image_ipfs_key,
       bannerImageIpfsKey: banner_image_ipfs_key,
+      projects: projects.map(&:name).uniq,
     }
     fields[:skills] = _skills(options) if options[:skills]
     fields

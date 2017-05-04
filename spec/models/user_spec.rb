@@ -11,6 +11,7 @@ RSpec.describe User, type: :model do
                                                                skills
                                                                avatarImageIpfsKey
                                                                bannerImageIpfsKey
+                                                               projects
                                                              ])
     end
 
@@ -26,6 +27,7 @@ RSpec.describe User, type: :model do
                                                     uportAddress: user.uport_address,
                                                     avatarImageIpfsKey: user.avatar_image_ipfs_key,
                                                     bannerImageIpfsKey: user.banner_image_ipfs_key,
+                                                    projects: [ruby_skill_claim_1.project.name],
                                                     skills: [{ name: 'Ruby',
                                                                projectCount: 1,
                                                                confirmationsCount: 0,
@@ -52,6 +54,8 @@ RSpec.describe User, type: :model do
                                                     uportAddress: user.uport_address,
                                                     avatarImageIpfsKey: user.avatar_image_ipfs_key,
                                                     bannerImageIpfsKey: user.banner_image_ipfs_key,
+                                                    projects: [ruby_skill_claim_1.project.name,
+                                                               ruby_skill_claim_2.project.name],
                                                     skills: [{ name: 'Ruby',
                                                                projectCount: 2,
                                                                confirmationsCount: 0,
@@ -104,6 +108,8 @@ RSpec.describe User, type: :model do
                                                     uportAddress: user.uport_address,
                                                     avatarImageIpfsKey: user.avatar_image_ipfs_key,
                                                     bannerImageIpfsKey: user.banner_image_ipfs_key,
+                                                    projects: [ruby_skill_claim_1.project.name,
+                                                               ruby_skill_claim_2.project.name],
                                                     skills: [{ name: 'Ruby',
                                                                projectCount: 2,
                                                                confirmationsCount: 3,

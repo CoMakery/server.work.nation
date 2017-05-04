@@ -31,6 +31,7 @@ RSpec.describe UsersController, type: :controller do
           'name' => user.name,
           'avatarImageIpfsKey' => user.avatar_image_ipfs_key,
           'bannerImageIpfsKey' => user.banner_image_ipfs_key,
+          'projects' => [],
           'skills' => [],
         )
       end
@@ -48,6 +49,7 @@ RSpec.describe UsersController, type: :controller do
           'avatarImageIpfsKey' => user.avatar_image_ipfs_key,
           'bannerImageIpfsKey' => user.banner_image_ipfs_key,
           'uportAddress' => user.uport_address,
+          'projects' => [/.+/, /.+/],
           'skills' => [
             {
               'name' => 'Ruby on Rails',
