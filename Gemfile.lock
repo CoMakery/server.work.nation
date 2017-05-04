@@ -129,8 +129,6 @@ GEM
     nio4r (2.0.0)
     nokogiri (1.7.1)
       mini_portile2 (~> 2.1.0)
-    olive_branch (1.2.3)
-      rails (>= 4.0)
     parser (2.4.0.0)
       ast (~> 2.2)
     pg (0.20.0)
@@ -283,7 +281,6 @@ DEPENDENCIES
   foreman
   httparty
   listen
-  olive_branch
   pattern_expander!
   pg
   pivotal_git_scripts

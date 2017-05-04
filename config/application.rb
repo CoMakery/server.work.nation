@@ -48,6 +48,6 @@ module WorkNation
     # # require 'syslog/logger'
     # # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
 
-    config.middleware.use OliveBranch::Middleware
+    # config.middleware.use OliveBranch::Middleware
   end
 end
