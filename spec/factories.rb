@@ -67,12 +67,6 @@ FactoryGirl.define do
 
     user { create :user }
 
-    transient do
-      count_seed { rand(0..8) }
-    end
-
-    project_count { count_seed }
-
     ipfs_reputon_key
 
     project_permanode_id { create(:project).permanode_id }
@@ -83,12 +77,10 @@ FactoryGirl.define do
 
     trait :unconfirmed do
       name 'Elixir'
-      project_count 0
     end
 
     trait :confirmed do
       name 'Ruby on Rails'
-      project_count 5
       after(:create) do |skill_claim|
         3.times do
           create :confirmation,

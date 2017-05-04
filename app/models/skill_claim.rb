@@ -13,7 +13,6 @@ class SkillClaim < ApplicationRecord
     fields = {
       name: name,
       confirmationsCount: confirmations_count,
-      projectCount: project_count,
       ipfsReputonKey: ipfs_reputon_key,
       createdAt: created_at,
     }

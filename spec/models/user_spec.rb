@@ -24,19 +24,16 @@ RSpec.describe User, type: :model do
     let(:ruby_skill_claim) do
       create :skill_claim,
         name: 'Ruby',
-        project_count: 1,
         user: rubyist_3rd_degree
     end
     let(:erlang_skill_claim) do
       create :skill_claim,
         name: 'Erlang',
-        project_count: 1,
         user: erlanger_2nd_degree
     end
     let(:javascript_skill_claim) do
       create :skill_claim,
         name: 'Javascript',
-        project_count: 1,
         user: javascripter_3rd_degree
     end
 
@@ -84,7 +81,6 @@ RSpec.describe User, type: :model do
       before do
         ruby_skill_claim = create :skill_claim,
           name: 'Ruby',
-          project_count: 1,
           user: javascripter_3rd_degree
 
         javascripter_3rd_degree.update name: 'Javascripter and Rubyist'
@@ -131,13 +127,11 @@ RSpec.describe User, type: :model do
     let(:ruby_skill_claim) do
       create :skill_claim,
         name: 'Ruby',
-        project_count: 1,
         user: rubyist_confirming_erlanger
     end
     let(:erlang_skill_claim) do
       create :skill_claim,
         name: 'Erlang',
-        project_count: 1,
         user: erlanger_confirming_rubyist
     end
 

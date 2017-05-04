@@ -53,7 +53,6 @@ RSpec.describe UsersController, type: :controller do
             {
               'name' => 'Ruby on Rails',
               'confirmationsCount' => 3,
-              'projectCount' => 5,
               'ipfsReputonKey' => /QmREPUTON[\w]+/,
               'confirmations' => [
                 {
@@ -79,7 +78,6 @@ RSpec.describe UsersController, type: :controller do
             {
               'name' => 'Elixir',
               'confirmationsCount' => 0,
-              'projectCount' => 0,
               'ipfsReputonKey' => /QmREPUTON[\w]+/,
               'confirmations' => [],
             },

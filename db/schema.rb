@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170504035651) do
+ActiveRecord::Schema.define(version: 20170504215056) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,7 +39,6 @@ ActiveRecord::Schema.define(version: 20170504035651) do
   create_table "skill_claims", force: :cascade do |t|
     t.integer "skill_claimant_id"
     t.text "name"
-    t.integer "project_count", default: 0
     t.integer "confirmations_count", default: 0
     t.text "ipfs_reputon_key"
     t.datetime "created_at", null: false
