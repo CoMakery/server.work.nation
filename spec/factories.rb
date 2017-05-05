@@ -41,7 +41,9 @@ FactoryGirl.define do
     trait :random_skill_claims do
       after(:create) do |user|
         SKILLS.sample(rand(0..7)).each do |skill_name|
-          create(:skill_claim, :random_ipfs, user: user, name: skill_name)
+          rand(0..7).times do
+            create(:skill_claim, :random_ipfs, user: user, name: skill_name)
+          end
         end
       end
     end
