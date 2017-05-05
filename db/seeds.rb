@@ -21,6 +21,29 @@ if Rails.env.development? || ENV['ALLOW_SEED_DATA']
     create :project
   end
 
-  sofia = User.first
-  sofia.update!(name: 'Sofia Lee', uport_address: '0xfdab345e368120a5ba99549c1f74371cd73cdb93')
+  # Sofia:
+  sofia = User.find_or_create_by! uport_address: '0xfdab345e368120a5ba99549c1f74371cd73cdb93'
+  sofia.update! name: 'Sofia Lee', avatar_image_ipfs_key: 'QmTJuzT4n66VAVEr2SaJKLHo6jBUfYejBnb8eg1Q4nadnr'
+
+  # Sofia skill claims:
+  50.times do
+    create :skill_claim, :random_ipfs, user: sofia, name: %w[Ruby Elixir Javascript Ethereum Bitcoin].sample
+  end
+
+  # Confirm Sophia:
+  100.times do
+    create :confirmation, :random_confirmer, :random_ipfs,
+      skill_claimant_id: sofia.id,
+      skill_claim_id: sofia.skill_claims.sample.id
+  end
+
+  # Sophia Confirms others:
+  100.times do
+    begin
+      create :confirmation, :random_skill_claim, :random_ipfs, confirmer_id: sofia.id
+    rescue
+      nil
+    end
+  end
+
 end
