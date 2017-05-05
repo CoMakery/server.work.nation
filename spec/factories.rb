@@ -1,8 +1,8 @@
 FactoryGirl.define do
   BASE58_ALPHABET = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz'.freeze
-  SKILL = %w[UX Design Ruby Elixir Javascript Java Ethereum Bitcoin C++ IPFS webtorrent uPort] +
-          ['growth hacking', 'training design', 'project management', 'product design',
-           'online marketing', 'hardware hacking', 'security reviews']
+  SKILLS = %w[UX Design Ruby Elixir Javascript Java Ethereum Bitcoin C++ IPFS webtorrent uPort] +
+           ['growth hacking', 'training design', 'project management', 'product design',
+            'online marketing', 'hardware hacking', 'security reviews']
 
   sequence :uport_address do |n|
     PatternExpander.new('0x' + ('[+h]' * 40))[n]
@@ -40,7 +40,7 @@ FactoryGirl.define do
 
     trait :random_skill_claims do
       after(:create) do |user|
-        SKILL.sample(rand(0..7)).each do |skill_name|
+        SKILLS.sample(rand(0..7)).each do |skill_name|
           create(:skill_claim, :random_ipfs, user: user, name: skill_name)
         end
       end
@@ -63,7 +63,7 @@ FactoryGirl.define do
   end
 
   factory :skill_claim do
-    name { SKILL.sample }
+    name { SKILLS.sample }
 
     user { create :user }
 

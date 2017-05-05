@@ -5,14 +5,14 @@ RSpec.describe User, type: :model do
     let(:user) { create :user }
 
     specify do
-      expect(user.as_json(skills: true).keys).to match_array(%i[
-                                                               name
-                                                               uportAddress
-                                                               skills
-                                                               avatarImageIpfsKey
-                                                               bannerImageIpfsKey
-                                                               projects
-                                                             ])
+      expect(user.as_json(skills: true, projects: true).keys).to match_array(%i[
+                                                                               name
+                                                                               uportAddress
+                                                                               skills
+                                                                               avatarImageIpfsKey
+                                                                               bannerImageIpfsKey
+                                                                               projects
+                                                                             ])
     end
 
     describe 'with one claim for a skill' do
@@ -23,16 +23,18 @@ RSpec.describe User, type: :model do
       end
 
       specify do
-        expect(user.as_json(skills: true)).to match(name: user.name,
-                                                    uportAddress: user.uport_address,
-                                                    avatarImageIpfsKey: user.avatar_image_ipfs_key,
-                                                    bannerImageIpfsKey: user.banner_image_ipfs_key,
-                                                    projects: [ruby_skill_claim_1.project.name],
-                                                    skills: [{ name: 'Ruby',
-                                                               projectCount: 1,
-                                                               confirmationsCount: 0,
-                                                               ipfsReputonKeys: [/QmREPUTON[\w]+/],
-                                                               confirmations: [] }])
+        expect(user.as_json(skills: true, projects: true)).to match(
+          name: user.name,
+          uportAddress: user.uport_address,
+          avatarImageIpfsKey: user.avatar_image_ipfs_key,
+          bannerImageIpfsKey: user.banner_image_ipfs_key,
+          projects: [ruby_skill_claim_1.project.name],
+          skills: [{ name: 'Ruby',
+                     projectCount: 1,
+                     confirmationsCount: 0,
+                     ipfsReputonKeys: [/QmREPUTON[\w]+/],
+                     confirmations: [] }],
+        )
       end
     end
 
@@ -50,18 +52,25 @@ RSpec.describe User, type: :model do
       end
 
       specify do
-        expect(user.as_json(skills: true)).to match(name: user.name,
-                                                    uportAddress: user.uport_address,
-                                                    avatarImageIpfsKey: user.avatar_image_ipfs_key,
-                                                    bannerImageIpfsKey: user.banner_image_ipfs_key,
-                                                    projects: [ruby_skill_claim_1.project.name,
-                                                               ruby_skill_claim_2.project.name],
-                                                    skills: [{ name: 'Ruby',
-                                                               projectCount: 2,
-                                                               confirmationsCount: 0,
-                                                               ipfsReputonKeys: [/QmREPUTON[\w]+/,
-                                                                                 /QmREPUTON[\w]+/],
-                                                               confirmations: [] }])
+        expect(user.as_json(skills: true, projects: true)).to match(
+          name: user.name,
+          uportAddress: user.uport_address,
+          avatarImageIpfsKey: user.avatar_image_ipfs_key,
+          bannerImageIpfsKey: user.banner_image_ipfs_key,
+          projects: [
+            ruby_skill_claim_1.project.name,
+            ruby_skill_claim_2.project.name,
+          ].sort,
+          skills: [
+            {
+              name: 'Ruby',
+              projectCount: 2,
+              confirmationsCount: 0,
+              ipfsReputonKeys: [/QmREPUTON[\w]+/, /QmREPUTON[\w]+/],
+              confirmations: [],
+            },
+          ],
+        )
       end
     end
 
@@ -104,18 +113,22 @@ RSpec.describe User, type: :model do
       end
 
       specify do
-        expect(user.as_json(skills: true)).to match(name: user.name,
-                                                    uportAddress: user.uport_address,
-                                                    avatarImageIpfsKey: user.avatar_image_ipfs_key,
-                                                    bannerImageIpfsKey: user.banner_image_ipfs_key,
-                                                    projects: [ruby_skill_claim_1.project.name,
-                                                               ruby_skill_claim_2.project.name],
-                                                    skills: [{ name: 'Ruby',
-                                                               projectCount: 2,
-                                                               confirmationsCount: 3,
-                                                               ipfsReputonKeys: [/QmREPUTON[\w]+/,
-                                                                                 /QmREPUTON[\w]+/],
-                                                               confirmations: [] }])
+        expect(user.as_json(skills: true, projects: true)).to match(
+          name: user.name,
+          uportAddress: user.uport_address,
+          avatarImageIpfsKey: user.avatar_image_ipfs_key,
+          bannerImageIpfsKey: user.banner_image_ipfs_key,
+          projects: [ruby_skill_claim_1.project.name, ruby_skill_claim_2.project.name].sort,
+          skills: [
+            {
+              name: 'Ruby',
+              projectCount: 2,
+              confirmationsCount: 3,
+              ipfsReputonKeys: [/QmREPUTON[\w]+/, /QmREPUTON[\w]+/],
+              confirmations: [],
+            },
+          ],
+        )
       end
     end
   end

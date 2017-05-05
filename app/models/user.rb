@@ -78,7 +78,7 @@ class User < ApplicationRecord
   end
 
   def _skills(options)
-    skill_claims.as_json(options).each_with_object({}) do |skill_claim, skills|
+    skill_map = skill_claims.as_json(options).each_with_object({}) do |skill_claim, skills|
       skill = skills[skill_claim[:name]] ||= { name: skill_claim[:name],
                                                projectCount: 0,
                                                confirmationsCount: 0,
@@ -89,6 +89,7 @@ class User < ApplicationRecord
       skill[:ipfsReputonKeys] << skill_claim.delete(:ipfsReputonKey)
       skill[:confirmations] += skill_claim[:confirmations] if skill_claim[:confirmations].present?
       skills
-    end.values
+    end
+    skill_map.values
   end
 end
