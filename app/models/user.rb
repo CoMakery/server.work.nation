@@ -50,8 +50,8 @@ class User < ApplicationRecord
       uportAddress: uport_address,
       avatarImageIpfsKey: avatar_image_ipfs_key,
       bannerImageIpfsKey: banner_image_ipfs_key,
-      projects: projects.map(&:name).uniq,
     }
+    fields[:projects] = projects.map(&:name).uniq.sort if options[:projects]
     fields[:skills] = _skills(options) if options[:skills]
     fields
   end

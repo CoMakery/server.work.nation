@@ -12,13 +12,13 @@ class UsersController < ApplicationController
       @users = User.limit(200).includes(:skill_claims)
     end
 
-    render json: @users
+    render json: @users.as_json(skills: true)
   end
 
   # GET /users/0x01d3b5eaa2e305a1553f0e2612353c94e597449e (uPort address)
   def show
     @user = User.find_or_create_by!(uport_address: params[:uport_address])
-    render json: @user.as_json(skills: true, confirmations: true)
+    render json: @user.as_json(projects: true, skills: true, confirmations: true)
     UpdateProfile.perform_async @user.to_param # update profile info from uPort async
   end
 end

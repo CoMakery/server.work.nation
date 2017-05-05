@@ -18,7 +18,7 @@ class SkillClaim < ApplicationRecord
     }
     fields[:confirmations] = confirmations.as_json if options[:confirmations]
     fields[:user] = user.as_json if options[:user]
-    # fields[:project] = project.as_json if options[:project]
+    fields[:project] = project.as_json if options[:project]
     if options[:confirmed_by?].present?
       confirmer_uport_address = options[:confirmed_by?]
       fields[:confirmedStatus] = {
