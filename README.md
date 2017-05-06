@@ -1,5 +1,7 @@
 # Work.nation Server
 
+[![Build Status](https://travis-ci.org/worknation/server.work.nation.svg?branch=master)](https://travis-ci.org/worknation/server.work.nation)
+
 ## Set up
 
     bundle install
@@ -24,10 +26,6 @@
 ## Push code
 
     bin/shipit  # runs all checks and pushes only if checks pass
-
-## CI
-
-See https://circleci.com/gh/CoMakery/server.work.nation
 
 ## Ethereum 
 
