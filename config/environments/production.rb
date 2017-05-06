@@ -11,7 +11,7 @@ Rails.application.configure do
   config.eager_load = true
 
   # Full error reports are disabled and caching is turned on.
-  config.consider_all_requests_local = false
+  config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
 
   # Attempt to read encrypted secrets from `config/secrets.yml.enc`.
@@ -44,7 +44,7 @@ Rails.application.configure do
   config.log_level = :debug
 
   # Prepend all log lines with the following tags.
-  config.log_tags = [:request_id]
+  config.log_tags = [ :request_id ]
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
@@ -82,9 +82,4 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   config.eager_load = true
-
-  config.middleware.use Rack::HostRedirect, {
-      'worknation.io' => 'demo.worknation.io',
-      'www.worknation.io' => 'demo.worknation.io',
-  }
 end
