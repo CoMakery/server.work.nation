@@ -1,6 +1,9 @@
 sudo: false
 language: ruby
-script: bin/checks-all
+script:
+  - RAILS_ENV=test bundle exec rake db:create
+  - bundle exec rake db:test:prepare
+  - bin/checks-all
 notifications:
   slack:
     on_success: change
