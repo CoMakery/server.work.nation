@@ -28,6 +28,11 @@ GIT
     acts-as-taggable-on (4.0.0)
       activerecord (>= 4.0)
 
+PATH
+  remote: ~/code/trustgraph/ruby-trustgraph
+  specs:
+    trustgraph (0.1.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -301,6 +306,7 @@ DEPENDENCIES
   sidekiq-scheduler
   spring
   spring-watcher-listen
+  trustgraph!
 
 RUBY VERSION
    ruby 2.3.1p112

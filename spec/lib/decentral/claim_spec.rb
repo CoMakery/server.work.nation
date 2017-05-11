@@ -25,9 +25,17 @@ describe(Decentral::Claim) do
     end
 
     context 'user self-claims a skill' do
+      let(:claim) do
+        TrustGraph::Claim.new(
+          content: skill_claim_reputon,
+          ipfs_key: 'QmXXX',
+          signer: skill_claimant.uport_address,
+        )
+      end
+
       specify do
         expect do
-          described_class.parse(skill_claim_reputon, 'QmXXX', skill_claimant.uport_address)
+          described_class.parse(claim)
         end.to change { SkillClaim.count }.by(1)
       end
     end
@@ -50,18 +58,35 @@ describe(Decentral::Claim) do
           ],
         }.to_json
       end
+      let(:claim) do
+        TrustGraph::Claim.new(
+          content: confirmation_reputon,
+          ipfs_key: skill_claim.ipfs_reputon_key,
+          signer: confirmer.uport_address,
+        )
+      end
 
       specify do
         expect do
-          described_class.parse(confirmation_reputon, skill_claim.ipfs_reputon_key, confirmer.uport_address)
+          described_class.parse(claim)
         end.to change { Confirmation.count }.by(1)
       end
     end
 
-    specify 'invalid data' do
-      expect do
-        described_class.parse('content', 'QmXXX', '0x111')
-      end.to(raise_error(Decentral::InvalidFormatError, /Expected JSON/))
+    describe 'invalid data' do
+      let(:invalid_claim) do
+        TrustGraph::Claim.new(
+          content: 'content',
+          ipfs_key: 'QmXXX',
+          signer: '0x111',
+        )
+      end
+
+      specify do
+        expect do
+          described_class.parse(invalid_claim)
+        end.to(raise_error(/Expected JSON/))
+      end
     end
   end
 end

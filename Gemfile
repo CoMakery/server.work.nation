@@ -23,6 +23,7 @@ gem 'sentry-raven'
 gem 'sidekiq'
 gem 'sidekiq-failures'
 gem 'sidekiq-scheduler'
+gem 'trustgraph', path: '~/code/trustgraph/ruby-trustgraph'
 
 group :development, :test do
   gem 'dotenv-rails'
