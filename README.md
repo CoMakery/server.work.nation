@@ -4,6 +4,10 @@
 
 For a general overview of Work.nation, see <https://github.com/worknation/work.nation>.
 
+## Live demo
+
+https://demo.worknation.io
+
 ## Set up
 
     bundle install
