@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/worknation/server.work.nation.svg?branch=master)](https://travis-ci.org/worknation/server.work.nation)
 
+For a general overview of Work.nation, see <https://github.com/worknation/work.nation>.
+
 ## Set up
 
     bundle install
