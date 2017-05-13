@@ -4,10 +4,21 @@ module Decentral
   class Claim
     extend Decentral::Log
 
+    REDIS = if ENV['REDISTOGO_URL']
+      Redis.new(url: URI.parse(ENV['REDISTOGO_URL']))
+    else
+      Redis.new
+    end
+
+    def self.reset_claim_count
+      REDIS.set('known_claim_count', -1)
+    end
+
     def self.get_latest_claims
-      TrustGraph::Claim.get_latest_claims do |claim|
-        parse(claim)
-      end
+      claims = TrustGraph::Claim.get_latest_claims(
+          known_claim_count: REDIS.get('known_claim_count')
+      )
+      claim { |claim| parse(claim) }
     end
 
     def self.parse(claim)
@@ -22,6 +33,8 @@ module Decentral
       end
     rescue DecentralError => e
       Decentral.handle_error e
+    ensure
+      REDIS.set('known_claim_count', claim_index)
     end
 
     def self.save_project(params)
