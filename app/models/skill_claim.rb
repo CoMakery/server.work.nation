@@ -1,6 +1,6 @@
 class SkillClaim < ApplicationRecord
   belongs_to :user, foreign_key: :skill_claimant_id
-  has_many :confirmations
+  has_many :confirmations, dependent: :destroy
   belongs_to :project,
     foreign_key: :project_permanode_id,
     primary_key: :permanode_id,
@@ -8,6 +8,8 @@ class SkillClaim < ApplicationRecord
 
   validates :skill_claimant_id, :ipfs_reputon_key, presence: true
   validates :ipfs_reputon_key, uniqueness: true
+  validates :name, uniqueness: { scope: %i[skill_claimant_id project_permanode_id],
+                                 message: ->(object, _data) { "'#{object.name}' already has existing skill claim from user ##{object.skill_claimant_id} for project #{object.project_permanode_id}" } }
 
   def as_json(options = {})
     fields = {

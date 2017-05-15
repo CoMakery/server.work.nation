@@ -15,5 +15,20 @@ RSpec.describe SkillClaim, type: :model do
     specify do
       expect(skill_claim.project).to eq(project)
     end
+
+    describe '2 skill claims with same name for same user on the same project' do
+      let(:user) { create :user }
+      let(:project) { create :project }
+
+      before do
+        create :skill_claim, name: 'Ruby', user: user, project: project
+      end
+
+      specify do
+        expect do
+          create :skill_claim, name: 'Ruby', user: user, project: project
+        end.to raise_error(ActiveRecord::RecordInvalid, /'Ruby' .* existing skill claim .* user ##{user.id} .* project #{project.permanode_id}/)
+      end
+    end
   end
 end

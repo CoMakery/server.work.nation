@@ -138,11 +138,15 @@ module Decentral
       skill_claim = user.skill_claims.find_by(ipfs_reputon_key: ipfs_key)
       return if skill_claim.present?
       project = Project.find_or_create_by!(permanode_id: reputon_data['project']) # TODO: validate valid permanode
-      log user.skill_claims.create!(
-        name: reputon_data['assertion'],
-        ipfs_reputon_key: ipfs_key,
-        project_permanode_id: project.permanode_id,
-      )
+      begin
+        log user.skill_claims.create!(
+          name: reputon_data['assertion'],
+          ipfs_reputon_key: ipfs_key,
+          project_permanode_id: project.permanode_id,
+        )
+      rescue ActiveRecord::RecordInvalid => e
+        Decentral.handle_error e
+      end
     end
 
     def self.save_confirmation!(reputon_data, ipfs_key)
