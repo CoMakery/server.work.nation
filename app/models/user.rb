@@ -51,7 +51,7 @@ class User < ApplicationRecord
       avatarImageIpfsKey: avatar_image_ipfs_key,
       bannerImageIpfsKey: banner_image_ipfs_key,
     }
-    fields[:projects] = projects.map(&:name).uniq.sort if options[:projects]
+    fields[:projects] = projects.map(&:name).compact.uniq.sort if options[:projects]
     fields[:skills] = _skills(options) if options[:skills]
     fields
   end
