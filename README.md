@@ -22,6 +22,10 @@ https://demo.worknation.io
 
     rake db:setup  # nukes dev db, creates it, loads seed data
 
+If hosted on heroku, you can create seed data with:
+
+    heroku run[:detached] 'ALLOW_SEED_DATA=true SEEDS_USERS=7] rake db:seed' --app <HEROKU_APP_NAME>
+
 ## Run tests and code checks
 
     bin/checks      # run faster checks
