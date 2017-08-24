@@ -14,9 +14,11 @@ https://demo.worknation.io
 
 ## Start server
 
-    foreman start  # to start server + sidekiq
-    # or
-    rails server   # just server
+```
+foreman start  # to start server + sidekiq
+# or
+rails server   # just server
+```
 
 ## Create seed data
 
