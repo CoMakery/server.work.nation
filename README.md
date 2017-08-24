@@ -30,10 +30,12 @@ If hosted on heroku, you can create seed data with:
 
 ## Run tests and code checks
 
-    bin/checks      # run faster checks
-    bin/checks-all  # run all checks
-    bin/rspec       # rspec only
-    bin/cop         # rubocop only
+```
+bin/checks      # run faster checks
+bin/checks-all  # run all checks
+bin/rspec       # rspec only
+bin/cop         # rubocop only
+```
 
 ## Push code
 
