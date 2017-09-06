@@ -3,7 +3,7 @@ class User < ApplicationRecord
   has_many :confirmations, foreign_key: :confirmer_id
   has_many :projects, through: :skill_claims
 
-  validates :uport_address, presence: true, uniqueness: true, format: { with: /\A0x[0-9a-fA-F]{40}\z/ }
+  validates :uport_address, presence: true, uniqueness: true, format: { with: /\A[0-9A-Z]{16,}\z/i }
 
   TRUST_GRAPH_SQL = %{
     WITH RECURSIVE trust_graph(confirmer_id, skill_claimant_id, skill_claim_id, depth, path, confirmations_in_graph) AS
