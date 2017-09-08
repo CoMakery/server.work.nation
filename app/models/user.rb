@@ -56,17 +56,17 @@ class User < ApplicationRecord
     fields
   end
 
-  def update_from_uport_profile!
-    profile = Decentral::Uport.legacy_profile(uport_address) # TODO: handle failure case, profile nil
-    user = User.find_or_create_by!(uport_address: uport_address)
-    user.update!(
-      name: profile['name'],
-      avatar_image_ipfs_key: profile['image'].try(:[], 'contentUrl')&.sub('/ipfs/', ''),
-      banner_image_ipfs_key: profile['banner'].try(:[], 'contentUrl')&.sub('/ipfs/', ''),
-    )
-  rescue Decentral::DecentralError => error
-    Decentral.handle_error error
-  end
+  # def update_from_uport_profile!
+  #   profile = Decentral::Uport.legacy_profile(uport_address) # TODO: handle failure case, profile nil
+  #   user = User.find_or_create_by!(uport_address: uport_address)
+  #   user.update!(
+  #     name: profile['name'],
+  #     avatar_image_ipfs_key: profile['image'].try(:[], 'contentUrl')&.sub('/ipfs/', ''),
+  #     banner_image_ipfs_key: profile['banner'].try(:[], 'contentUrl')&.sub('/ipfs/', ''),
+  #   )
+  # rescue Decentral::DecentralError => error
+  #   Decentral.handle_error error
+  # end
 
   def search_trust_graph(skill, depth: 3)
     self.class.search_trust_graph(id, skill, depth: depth)

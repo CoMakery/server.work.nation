@@ -15,9 +15,9 @@ RSpec.describe UsersController, type: :controller do
   end
 
   describe 'GET #show' do
-    before do
-      allow(UpdateProfile).to receive(:perform_async) # don't kick off the job
-    end
+    # before do
+    #   allow(UpdateProfile).to receive(:perform_async) # don't kick off the job
+    # end
     describe 'for user without skills' do
       let!(:user) { create :user }
 

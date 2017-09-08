@@ -23,6 +23,8 @@ class UsersController < ApplicationController
   def show
     user = User.find_or_create_by!(uport_address: params[:uport_address])
     render json: user.as_json(projects: true, skills: true, confirmations: true)
-    UpdateProfile.perform_async user.to_param # update profile info from uPort async
+
+    # TODO: reinstate; tracked in https://github.com/worknation/server.work.nation/issues/22
+    # UpdateProfile.perform_async user.to_param # update profile info from uPort async
   end
 end
