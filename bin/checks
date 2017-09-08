@@ -10,3 +10,5 @@ fi
 bin/cop  # rubocop
 
 bundle exec brakeman --exit-on-warn --quiet > /dev/null
+
+bundle exec rails_best_practices .
